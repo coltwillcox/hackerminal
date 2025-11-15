@@ -50,8 +50,12 @@
 
 ### 📋 Prerequisites
 
+**Required:**
 - 🔧 Go 1.16 or higher
 - 💻 Unix-like terminal (Linux, macOS)
+
+**Optional:**
+- 🔤 [Nerd Fonts](https://www.nerdfonts.com/) - For proper display of icons in the terminal prompt (recommended: JetBrainsMono Nerd Font, FiraCode Nerd Font, or Hack Nerd Font)
 
 ### 🔨 Build
 
@@ -60,6 +64,8 @@ go build -o hackerminal main.go
 ```
 
 ## 🎮 Usage
+
+### Basic Usage
 
 Simply run the program:
 
@@ -70,6 +76,53 @@ Simply run the program:
 The program will continuously display random hacking sequences. Press `Ctrl+C` to exit.
 
 > 💡 **Tip:** Run this in front of non-technical people for maximum effect!
+
+### Advanced Usage Ideas
+
+#### 🖥️ As a Screensaver
+
+Use Hackerminal as a screensaver to make your computer look like it's doing important hacking work:
+
+**Linux (with xscreensaver):**
+```bash
+# Add to ~/.xscreensaver
+programs: /path/to/hackerminal -root \n\
+```
+
+**macOS (with custom script):**
+```bash
+# Create a wrapper script that runs hackerminal in fullscreen
+#!/bin/bash
+clear && /path/to/hackerminal
+```
+
+#### 🔒 As a Lock Screen Effect
+
+Impress (or confuse) anyone passing by your desk:
+
+**Linux (using i3lock or similar):**
+```bash
+# Run before locking
+hackerminal & sleep 2 && i3lock
+```
+
+**tmux/screen session:**
+```bash
+# Leave it running in a detached session
+tmux new-session -d -s hacker './hackerminal'
+# Reattach when you want to show off
+tmux attach -t hacker
+```
+
+#### 🎬 Display Mode
+
+For presentations or background displays:
+```bash
+# Run in fullscreen terminal (F11 in most terminals)
+./hackerminal
+```
+
+> 🎭 **Pro Tip:** Combine with a green or amber terminal color scheme for authentic CRT vibes!
 
 ## 🎭 Example Sequences
 
