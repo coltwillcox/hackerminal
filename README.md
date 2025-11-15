@@ -60,7 +60,12 @@
 ### 🔨 Build
 
 ```bash
-go build -o hackerminal main.go
+go build -o hackerminal .
+```
+
+Or to build and run in one step:
+```bash
+go run .
 ```
 
 ## 🎮 Usage
