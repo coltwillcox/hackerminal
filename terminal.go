@@ -8,18 +8,22 @@ import (
 )
 
 type HackerTerminal struct {
-	username string
-	target   string
+	username  string
+	target    string
+	sequences []func()
 }
 
 func NewHackerTerminal() *HackerTerminal {
 	usernames := []string{"cyb3rn1nja", "h4ck3rm4n", "zero_cool", "acidburn", "crash_override", "phantom_phreak"}
 	targets := []string{"mainframe", "pentagon.gov", "cyberdyne.sys", "oscorp.net", "umbrella.corp", "weyland.industries", "nostromo.ship", "sulaco.vessel", "mother.ai", "predator.net"}
 
-	return &HackerTerminal{
+	hackerTerminal := &HackerTerminal{
 		username: usernames[rand.Intn(len(usernames))],
 		target:   targets[rand.Intn(len(targets))],
 	}
+	hackerTerminal.createSequences()
+
+	return hackerTerminal
 }
 
 func (h *HackerTerminal) typeText(text string, delayMs int) {

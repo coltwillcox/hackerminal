@@ -8,10 +8,8 @@ import (
 	"time"
 )
 
-func (h *HackerTerminal) runSequence() {
-	h.showPrompt()
-	h.randomPause()
-	sequences := []func(){
+func (h *HackerTerminal) createSequences() {
+	h.sequences = []func(){
 		func() {
 			h.typeText("ssh root@"+h.target, 50)
 			time.Sleep(300 * time.Millisecond)
@@ -720,9 +718,14 @@ func (h *HackerTerminal) runSequence() {
 			h.typeText("\033[33m    (Knowledge is power... and also in /usr/share/man)\033[0m", 30)
 		},
 	}
+}
+
+func (h *HackerTerminal) runSequence() {
+	h.showPrompt()
+	h.randomPause()
 
 	// Run a random sequence
-	sequence := sequences[rand.Intn(len(sequences))]
+	sequence := h.sequences[rand.Intn(len(h.sequences))]
 	sequence()
 
 	time.Sleep(1 * time.Second)
