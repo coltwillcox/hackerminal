@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	spacer        = "    "
-	glitchChance  = 0.1
-	crtScanChance = 0.01
+	spacer            = "    "
+	glitchChance      = 0.1
+	crtScanChance     = 0.01
+	asciiSplashChance = 0.1
 )
 
 func (h *HackerTerminal) createSequences() {
@@ -29,7 +30,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[31m[sudo] password for hacking: ********\033[0m", 30)
 			time.Sleep(800 * time.Millisecond)
 			h.typeText("\033[32m✓ Planet successfully hacked!\033[0m", 30)
-			h.typeText("\033[33m(Just kidding, please don't hack planets)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Just kidding, please don't hack planets)\033[0m", 30)
 		},
 		func() {
 			h.typeText("nmap -sS -p- --reason "+h.target, 50)
@@ -55,14 +56,14 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(500 * time.Millisecond)
 			h.typeText("\033[31mERROR: nuclear_codes.txt: Permission denied\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m(Probably for the best)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Probably for the best)\033[0m", 30)
 		},
 		func() {
 			h.typeText("python3 enhance_image.py --zoom=infinity", 50)
 			time.Sleep(300 * time.Millisecond)
 			h.progressBar("Enhancing", 1500*time.Millisecond)
 			h.typeText("\033[32m[+] Image enhanced! Can now read license plate from satellite!\033[0m", 30)
-			h.typeText("\033[33m(This is not how pixels work, but okay Hollywood)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(This is not how pixels work, but okay Hollywood)\033[0m", 30)
 		},
 		func() {
 			h.typeText("create_gui_interface_using_visual_basic.vbs", 50)
@@ -81,7 +82,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[32m[+] Virus deployed successfully!\033[0m", 30)
 			time.Sleep(500 * time.Millisecond)
 			h.typeText("\033[35m♪ Never gonna give you up ♪\033[0m", 30)
-			h.typeText("\033[33m(They've been rickrolled!)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(They've been rickrolled!)\033[0m", 30)
 		},
 		func() {
 			h.typeText("decode --algorithm=plot-convenience cipher.txt", 50)
@@ -733,6 +734,8 @@ func (h *HackerTerminal) runSequence() {
 		h.screenGlitch()
 	} else if effectRoll < glitchChance+crtScanChance {
 		h.crtScanLines()
+	} else if effectRoll < glitchChance+crtScanChance+asciiSplashChance {
+		h.asciiSplash()
 	}
 
 	h.showPrompt()
@@ -750,6 +753,9 @@ func (h *HackerTerminal) runSequence() {
 	} else if effectRoll < glitchChance+crtScanChance {
 		time.Sleep(200 * time.Millisecond)
 		h.crtScanLines()
+	} else if effectRoll < glitchChance+crtScanChance+asciiSplashChance {
+		time.Sleep(200 * time.Millisecond)
+		h.asciiSplash()
 	}
 
 	time.Sleep(1 * time.Second)

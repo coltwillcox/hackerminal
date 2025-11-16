@@ -146,15 +146,18 @@ func (h *HackerTerminal) showBanner() {
 `
 
 	termWidth := getTerminalWidth()
-	bannerWidth := 65 // Width of the banner box
+	lines := strings.Split(banner, "\n")
+	maxLineLen := 0
+	for _, line := range lines {
+		maxLineLen = max(maxLineLen, visibleLength(line))
+	}
+	padding := max((termWidth-maxLineLen)/2, 0)
 
-	lines := strings.SplitSeq(banner, "\n")
-	for line := range lines {
+	for _, line := range lines {
 		if line == "" {
 			fmt.Println()
 			continue
 		}
-		padding := max((termWidth-bannerWidth)/2, 0)
 		fmt.Print(strings.Repeat(" ", padding))
 		fmt.Println("\033[38;5;46m" + line)
 	}
