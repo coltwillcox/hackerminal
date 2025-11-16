@@ -45,6 +45,7 @@
 - 🟢 Matrix-style rain effect
 - 🌐 Fake IP scanning
 - 🎨 ANSI color codes for dramatic output
+- 📺 Random screen glitch effects (static, corruption artifacts, horizontal tears)
 
 ## 🚀 Installation
 

@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	spacer = "    "
+	spacer       = "    "
+	glitchChance = 0.1
 )
 
 func (h *HackerTerminal) createSequences() {
@@ -725,12 +726,23 @@ func (h *HackerTerminal) createSequences() {
 }
 
 func (h *HackerTerminal) runSequence() {
+	// Random chance for screen glitch before prompt
+	if rand.Float32() < glitchChance {
+		h.screenGlitch()
+	}
+
 	h.showPrompt()
 	h.randomPause()
 
 	// Run a random sequence
 	sequence := h.sequences[rand.Intn(len(h.sequences))]
 	sequence()
+
+	// Random chance for screen glitch after sequence
+	if rand.Float32() < glitchChance {
+		time.Sleep(200 * time.Millisecond)
+		h.screenGlitch()
+	}
 
 	time.Sleep(1 * time.Second)
 	printSeparator()
