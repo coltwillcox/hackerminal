@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os/exec"
+	"strings"
 	"time"
 )
 
@@ -761,6 +763,70 @@ func (h *HackerTerminal) runSequence() {
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] All traces eliminated!\033[0m", 30)
 			h.typeText("\033[33m    (It's like we were never here)\033[0m", 30)
+		},
+		func() {
+			h.showPrompt()
+			h.randomPause()
+
+			// List of common manual pages to try
+			manPages := []string{"ls", "grep", "cat", "chmod", "chown", "find", "ps", "kill", "ssh", "tar", "gzip", "sed", "awk", "curl", "wget", "git", "make", "gcc", "bash", "vim"}
+			selectedMan := manPages[rand.Intn(len(manPages))]
+			numLines := 5 + rand.Intn(16)
+			h.typeText(fmt.Sprintf("man %s | head -n %d", selectedMan, numLines), 50)
+			time.Sleep(500 * time.Millisecond)
+
+			// Try to get actual man page content
+			cmd := exec.Command("man", selectedMan)
+			cmd.Env = append(cmd.Env, "LANG=en_US.UTF-8")
+			output, err := cmd.Output()
+
+			if err != nil || len(output) == 0 {
+				h.typeText("\033[31m[!] ERROR: Manual page not found or man command unavailable\033[0m", 30)
+				time.Sleep(300 * time.Millisecond)
+				h.typeText("\033[33m    (Even hackers need to RTFM sometimes)\033[0m", 30)
+				return
+			}
+
+			// Clean the output (remove ANSI codes from man output)
+			cleanOutput := string(output)
+			// Remove backspace sequences used for bold/underline in man pages
+			for strings.Contains(cleanOutput, "\b") {
+				cleanOutput = strings.ReplaceAll(cleanOutput, "\x08", "")
+			}
+
+			lines := strings.Split(cleanOutput, "\n")
+			if len(lines) == 0 {
+				h.typeText("\033[31m[!] ERROR: Empty manual page\033[0m", 30)
+				return
+			}
+
+			// Find a good starting point (skip empty lines at start)
+			startLine := 0
+			for startLine < len(lines) && strings.TrimSpace(lines[startLine]) == "" {
+				startLine++
+			}
+
+			h.typeText("\033[36m[*] Retrieving classified documentation...\033[0m", 30)
+			time.Sleep(300 * time.Millisecond)
+
+			linesDisplayed := 0
+			for i := startLine; i < len(lines) && linesDisplayed < numLines; i++ {
+				line := lines[i]
+				// Trim long lines to reasonable length
+				width := getTerminalWidth() - 4 // 4 is for spaces
+				if len(line) > width {
+					line = line[:width-3] + "..."
+				}
+				if strings.TrimSpace(line) != "" {
+					h.typeText(fmt.Sprintf("\033[33m    %s\033[0m", line), 15)
+					linesDisplayed++
+					time.Sleep(50 * time.Millisecond)
+				}
+			}
+
+			time.Sleep(500 * time.Millisecond)
+			h.typeText(fmt.Sprintf("\033[32m[+] Manual for '%s' extracted successfully!\033[0m", selectedMan), 30)
+			h.typeText("\033[33m    (Knowledge is power... and also in /usr/share/man)\033[0m", 30)
 		},
 	}
 
