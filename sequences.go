@@ -8,6 +8,10 @@ import (
 	"time"
 )
 
+const (
+	spacer = "    "
+)
+
 func (h *HackerTerminal) createSequences() {
 	h.sequences = []func(){
 		func() {
@@ -35,7 +39,7 @@ func (h *HackerTerminal) createSequences() {
 			h.progressBar("Brute forcing", 2*time.Second)
 			time.Sleep(200 * time.Millisecond)
 			h.typeText("\033[32m[+] Password found: hunter2\033[0m", 30)
-			h.typeText("\033[33m    (That's weird, all I see is *******)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(That's weird, all I see is *******)\033[0m", 30)
 		},
 		func() {
 			h.typeText("./mainframe_access --bypass-firewall --disable-ice", 50)
@@ -66,7 +70,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[32m[+] GUI created! Tracking IP address...\033[0m", 30)
 			time.Sleep(500 * time.Millisecond)
 			h.typeText(fmt.Sprintf("\033[32m[+] IP traced to: %d.%d.%d.%d\033[0m", rand.Intn(256), rand.Intn(256), rand.Intn(256), rand.Intn(256)), 30)
-			h.typeText("\033[33m    (Thanks, CSI: Cyber!)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Thanks, CSI: Cyber!)\033[0m", 30)
 		},
 		func() {
 			h.typeText("upload_virus.sh --payload=giggle.exe", 50)
@@ -97,7 +101,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[33m[!] Warning: AI becoming self-aware in 3... 2... 1...\033[0m", 30)
 			time.Sleep(800 * time.Millisecond)
 			h.typeText("\033[32m[+] Just kidding! Still a learning computer.\033[0m", 30)
-			h.typeText("\033[35m    (Hasta la vista, baby!)\033[0m", 30)
+			h.typeText("\033[35m"+spacer+"(Hasta la vista, baby!)\033[0m", 30)
 		},
 		func() {
 			h.typeText("time_travel --year=1984 --mission=protect", 50)
@@ -106,7 +110,7 @@ func (h *HackerTerminal) createSequences() {
 			h.progressBar("Charging flux capacitor", 2*time.Second)
 			h.typeText("\033[31m[!] ERROR: Clothes optional in time travel\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
-			h.typeText("\033[33m    (Come with me if you want to debug)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Come with me if you want to debug)\033[0m", 30)
 		},
 		func() {
 			h.typeText("scan_lifeforms --thermal-imaging --jungle-mode", 50)
@@ -116,15 +120,15 @@ func (h *HackerTerminal) createSequences() {
 			for range 4 {
 				temp := 36 + rand.Intn(3)
 				if rand.Float32() > 0.5 {
-					h.typeText(fmt.Sprintf("    Contact: %d.%d°C - \033[32mHuman\033[0m", temp, rand.Intn(10)), 30)
+					h.typeText(fmt.Sprintf(""+spacer+"Contact: %d.%d°C - \033[32mHuman\033[0m", temp, rand.Intn(10)), 30)
 				} else {
-					h.typeText(fmt.Sprintf("    Contact: %d.%d°C - \033[33mUnknown\033[0m", temp, rand.Intn(10)), 30)
+					h.typeText(fmt.Sprintf(""+spacer+"Contact: %d.%d°C - \033[33mUnknown\033[0m", temp, rand.Intn(10)), 30)
 				}
 				time.Sleep(200 * time.Millisecond)
 			}
 			h.typeText("\033[36m[*] One ugly... signature detected\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    (Get to the choppa!)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Get to the choppa!)\033[0m", 30)
 		},
 		func() {
 			h.typeText("activate_cloaking_device --stealth-mode", 50)
@@ -134,7 +138,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] You are now invisible!\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
-			h.typeText("\033[33m    (But we can still see you typing...)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(But we can still see you typing...)\033[0m", 30)
 		},
 		func() {
 			h.typeText("mother_query --special-order-937", 50)
@@ -145,7 +149,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[31m[!] Priority: Crew expendable\033[0m", 30)
 			time.Sleep(500 * time.Millisecond)
-			h.typeText("\033[33m    (I can't lie about your chances, but you have my sympathies)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(I can't lie about your chances, but you have my sympathies)\033[0m", 30)
 		},
 		func() {
 			h.typeText("scan_ventilation --motion-tracker", 50)
@@ -155,9 +159,9 @@ func (h *HackerTerminal) createSequences() {
 			for range 5 {
 				distance := 5 + rand.Intn(15)
 				if distance < 8 {
-					h.typeText(fmt.Sprintf("    *beep* Contact: %d meters... \033[31mToo close!\033[0m", distance), 30)
+					h.typeText(fmt.Sprintf(spacer+"*beep* Contact: %d meters... \033[31mToo close!\033[0m", distance), 30)
 				} else {
-					h.typeText(fmt.Sprintf("    *beep* Contact: %d meters... \033[33mMoving\033[0m", distance), 30)
+					h.typeText(fmt.Sprintf(spacer+"*beep* Contact: %d meters... \033[33mMoving\033[0m", distance), 30)
 				}
 				time.Sleep(400 * time.Millisecond)
 			}
@@ -177,13 +181,13 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(600 * time.Millisecond)
 			h.typeText("\033[36m[*] Biological analysis in progress...\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
-			h.typeText("\033[33m    Species: Unknown", 30)
-			h.typeText("    Threat level: Extremely hostile", 30)
-			h.typeText("    Blood type: Molecular acid (pH < 0)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"Species: Unknown", 30)
+			h.typeText(""+spacer+"Threat level: Extremely hostile", 30)
+			h.typeText(""+spacer+"Blood type: Molecular acid (pH < 0)\033[0m", 30)
 			time.Sleep(500 * time.Millisecond)
 			h.typeText("\033[31m[!] Recommendation: Nuke it from orbit\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    (It's the only way to be sure)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(It's the only way to be sure)\033[0m", 30)
 		},
 		func() {
 			h.typeText("synthetic_check --android-detection", 50)
@@ -194,19 +198,19 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[33m[!] But wait... milk in the veins?\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[31m    (You might be a robot!)\033[0m", 30)
+			h.typeText("\033[31m"+spacer+"(You might be a robot!)\033[0m", 30)
 		},
 		func() {
 			h.typeText("plasma_cannon --shoulder-mounted --targeting", 50)
 			time.Sleep(500 * time.Millisecond)
 			h.typeText("\033[36m[*] Calibrating tri-beam targeting system...\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[31m    ◉ ◉ ◉ LOCKED\033[0m", 30)
+			h.typeText("\033[31m"+spacer+"◉ ◉ ◉ LOCKED\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
 			h.progressBar("Charging plasma", 1500*time.Millisecond)
 			h.typeText("\033[32m[+] Weapon ready\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    (What's the matter? CIA got you pushing too many pencils?)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(What's the matter? CIA got you pushing too many pencils?)\033[0m", 30)
 		},
 		func() {
 			h.typeText("judgment_day --postpone --disable-skynet", 50)
@@ -218,7 +222,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] Judgment Day postponed... for now\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    (No fate but what we make)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(No fate but what we make)\033[0m", 30)
 		},
 		func() {
 			h.typeText("self_destruct --override-code-omega", 50)
@@ -232,7 +236,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[31m[!] The ship will not abort destruct sequence\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] Just kidding! This is just a simulation\033[0m", 30)
-			h.typeText("\033[33m    (You have 10 minutes to reach minimum safe distance)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(You have 10 minutes to reach minimum safe distance)\033[0m", 30)
 		},
 		func() {
 			h.typeText("trophy_room --view-skulls --honor-display", 50)
@@ -241,7 +245,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(400 * time.Millisecond)
 			skulls := []string{"Xenomorph", "Grid anomaly", "Debugger", "Syntax Error", "Null Pointer"}
 			for i := range 3 {
-				h.typeText(fmt.Sprintf("\033[33m    Trophy #%d: %s skull\033[0m", i+1, skulls[rand.Intn(len(skulls))]), 30)
+				h.typeText(fmt.Sprintf("\033[33m"+spacer+"Trophy #%d: %s skull\033[0m", i+1, skulls[rand.Intn(len(skulls))]), 30)
 				time.Sleep(300 * time.Millisecond)
 			}
 			h.typeText("\033[32m[+] You are one ugly code base!\033[0m", 30)
@@ -258,7 +262,7 @@ func (h *HackerTerminal) createSequences() {
 			}
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] All files encrypted with military-grade encryption!\033[0m", 30)
-			h.typeText("\033[33m    (Even we can't decrypt them now...)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Even we can't decrypt them now...)\033[0m", 30)
 		},
 		func() {
 			h.typeText("decrypt_message --key=rosebud --cipher=enigma message.enc", 50)
@@ -286,7 +290,7 @@ func (h *HackerTerminal) createSequences() {
 			ratio := float64(originalSize) / float64(compressedSize)
 			time.Sleep(300 * time.Millisecond)
 			h.typeText(fmt.Sprintf("\033[32m[+] Compressed %d GB → %d MB (%.1fx compression!)\033[0m", originalSize, compressedSize, ratio), 30)
-			h.typeText("\033[33m    (ZIP couldn't even dream of this ratio)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(ZIP couldn't even dream of this ratio)\033[0m", 30)
 		},
 		func() {
 			h.typeText("decompress_archive --extract=all stolen_data.tar.gz.bz2.xz.7z", 50)
@@ -298,7 +302,7 @@ func (h *HackerTerminal) createSequences() {
 			}
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] 1,337 files extracted successfully!\033[0m", 30)
-			h.typeText("\033[33m    (Someone really didn't want us to get this)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Someone really didn't want us to get this)\033[0m", 30)
 		},
 		func() {
 			h.typeText("hash_crack --wordlist=rockyou.txt --hash=5f4dcc3b5aa765d61d8327deb882cf99", 50)
@@ -311,8 +315,8 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText(fmt.Sprintf("\033[32m[+] Hash cracked after %d attempts!\033[0m", attempts), 30)
 			time.Sleep(200 * time.Millisecond)
 			passwords := []string{"password", "123456", "qwerty", "letmein", "admin"}
-			h.typeText(fmt.Sprintf("\033[33m    Original password: %s\033[0m", passwords[rand.Intn(len(passwords))]), 30)
-			h.typeText("\033[33m    (Seriously? That was the password?)\033[0m", 30)
+			h.typeText(fmt.Sprintf("\033[33m"+spacer+"Original password: %s\033[0m", passwords[rand.Intn(len(passwords))]), 30)
+			h.typeText("\033[33m"+spacer+"(Seriously? That was the password?)\033[0m", 30)
 		},
 		func() {
 			h.typeText("steganography_hide --image=cat.jpg --payload=secrets.txt", 50)
@@ -322,7 +326,7 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Embedding data in LSB", 1800*time.Millisecond)
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Data successfully hidden in image!\033[0m", 30)
-			h.typeText("\033[33m    (Now it's just a picture of a cat... or is it?)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Now it's just a picture of a cat... or is it?)\033[0m", 30)
 		},
 		func() {
 			h.typeText("steganography_extract --image=suspicious_meme.png", 50)
@@ -332,7 +336,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] Hidden message found!\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    Message: \"epstein didn't kill himself\"\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"Message: \"epstein didn't kill himself\"\033[0m", 30)
 		},
 		func() {
 			h.typeText("shred_evidence --passes=35 --method=gutmann incriminating_files/*", 50)
@@ -342,7 +346,7 @@ func (h *HackerTerminal) createSequences() {
 			h.progressBar("Overwriting with random data", 2500*time.Millisecond)
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Files permanently deleted!\033[0m", 30)
-			h.typeText("\033[33m    (Not even the FBI can recover these now)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Not even the FBI can recover these now)\033[0m", 30)
 		},
 		func() {
 			h.typeText("generate_keys --type=RSA-4096 --entropy=paranoid", 50)
@@ -351,8 +355,8 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Generating prime numbers", 2000*time.Millisecond)
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] Key pair generated successfully!\033[0m", 30)
-			h.typeText("\033[33m    Public key: AAAAB3NzaC1yc2EAAAADAQABAAACAQ...\033[0m", 30)
-			h.typeText("\033[33m    (Would take the sun's lifetime to crack)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"Public key: AAAAB3NzaC1yc2EAAAADAQABAAACAQ...\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Would take the sun's lifetime to crack)\033[0m", 30)
 		},
 		func() {
 			h.typeText("obfuscate_code --level=maximum --anti-debug payload.exe", 50)
@@ -369,7 +373,7 @@ func (h *HackerTerminal) createSequences() {
 			}
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Code successfully obfuscated!\033[0m", 30)
-			h.typeText("\033[33m    (Good luck reverse engineering this mess)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Good luck reverse engineering this mess)\033[0m", 30)
 		},
 		func() {
 			h.typeText("backup_system --destination=offshore --encrypt --split", 50)
@@ -382,7 +386,7 @@ func (h *HackerTerminal) createSequences() {
 			}
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Backup distributed across 4 continents!\033[0m", 30)
-			h.typeText("\033[33m    (They'd need to raid 4 countries simultaneously)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(They'd need to raid 4 countries simultaneously)\033[0m", 30)
 		},
 		func() {
 			h.typeText("sql_inject --url="+h.target+"/login --payload='OR 1=1--", 50)
@@ -396,10 +400,10 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[32m[+] Dumping user credentials...\033[0m", 30)
 			users := []string{"admin", "root", "sysadmin", "dbadmin", "test_user"}
 			for range 3 {
-				h.typeText(fmt.Sprintf("\033[33m    %s : P@ssw0rd%d\033[0m", users[rand.Intn(len(users))], rand.Intn(999)), 30)
+				h.typeText(fmt.Sprintf("\033[33m"+spacer+"%s : P@ssw0rd%d\033[0m", users[rand.Intn(len(users))], rand.Intn(999)), 30)
 				time.Sleep(250 * time.Millisecond)
 			}
-			h.typeText("\033[33m    (Bobby Tables would be proud)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Bobby Tables would be proud)\033[0m", 30)
 		},
 		func() {
 			h.typeText("wifi_crack --interface=wlan0 --target=FBI_Surveillance_Van_7", 50)
@@ -413,7 +417,7 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Running dictionary attack", 2500*time.Millisecond)
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] WiFi password cracked: \"FBIAgent123\"\033[0m", 30)
-			h.typeText("\033[33m    (They're not even trying to hide it anymore)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(They're not even trying to hide it anymore)\033[0m", 30)
 		},
 		func() {
 			h.typeText("ransomware_decrypt --key=universal --no-payment ransomed_files/", 50)
@@ -426,7 +430,7 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Exploiting implementation flaw", 2200*time.Millisecond)
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] All files decrypted without paying!\033[0m", 30)
-			h.typeText("\033[33m    (Take that, cyber criminals!)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Take that, cyber criminals!)\033[0m", 30)
 		},
 		func() {
 			h.typeText("blockchain_hack --target=bitcoin --double-spend --51-percent-attack", 50)
@@ -437,7 +441,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(500 * time.Millisecond)
 			h.typeText("\033[31m[!] ERROR: Would need more computing power than exists on Earth\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
-			h.typeText("\033[33m    (Satoshi wins this round)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Satoshi wins this round)\033[0m", 30)
 		},
 		func() {
 			h.typeText("social_engineer --target=ceo@"+h.target+" --pretend=IT-support", 50)
@@ -451,7 +455,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[36m[*] Waiting for victim to click link...\033[0m", 30)
 			time.Sleep(1000 * time.Millisecond)
 			h.typeText("\033[32m[+] CEO clicked the link! Credentials harvested!\033[0m", 30)
-			h.typeText("\033[33m    (The human is always the weakest link)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(The human is always the weakest link)\033[0m", 30)
 		},
 		func() {
 			h.typeText("zero_day_exploit --vulnerability=CVE-2077-1337 --target="+h.target, 50)
@@ -463,7 +467,7 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Deploying exploit", 2000*time.Millisecond)
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] Remote code execution achieved!\033[0m", 30)
-			h.typeText("\033[33m    (Worth every satoshi)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Worth every satoshi)\033[0m", 30)
 		},
 		func() {
 			h.typeText("botnet_control --zombies=10000 --ddos-target="+h.target+" --intensity=maximum", 50)
@@ -477,7 +481,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[36m[*] Traffic: 500 Gbps and rising...\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[31m[!] Target servers melting!\033[0m", 30)
-			h.typeText("\033[33m    (Their ops team is having a bad day)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Their ops team is having a bad day)\033[0m", 30)
 		},
 		func() {
 			h.typeText("deepfake_generate --target=ceo --say='Transfer funds to account 1337'", 50)
@@ -491,7 +495,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[36m[*] Calling finance department...\033[0m", 30)
 			time.Sleep(600 * time.Millisecond)
 			h.typeText("\033[32m[+] They fell for it! $1M transferred!\033[0m", 30)
-			h.typeText("\033[33m    (AI is getting scary good at this)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(AI is getting scary good at this)\033[0m", 30)
 		},
 		func() {
 			h.typeText("keylogger_install --stealth --target=all-workstations --exfiltrate-to=dark-server", 50)
@@ -505,7 +509,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[36m[*] Capturing keystrokes in real-time...\033[0m", 30)
 			time.Sleep(500 * time.Millisecond)
-			h.typeText("\033[33m    (Every password is belong to us)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Every password is belong to us)\033[0m", 30)
 		},
 		func() {
 			h.typeText("packet_sniff --interface=eth0 --filter='password|secret|confidential'", 50)
@@ -520,7 +524,7 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Analyzing for credentials", 2000*time.Millisecond)
 			time.Sleep(400 * time.Millisecond)
 			h.typeText("\033[32m[+] Found 17 passwords in cleartext!\033[0m", 30)
-			h.typeText("\033[33m    (Who uses HTTP in 2025?!)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Who uses HTTP in 2025?!)\033[0m", 30)
 		},
 		func() {
 			h.typeText("exfiltrate_data --source=/home/victim/Documents --method=dns-tunneling", 50)
@@ -531,7 +535,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(300 * time.Millisecond)
 			dataSize := 100 + rand.Intn(900)
 			h.typeText(fmt.Sprintf("\033[32m[+] Exfiltrated %d MB of sensitive data!\033[0m", dataSize), 30)
-			h.typeText("\033[33m    (Their firewall didn't even notice)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Their firewall didn't even notice)\033[0m", 30)
 		},
 		func() {
 			h.typeText("pivot_network --from=dmz --to=internal --escalate-privileges", 50)
@@ -545,7 +549,7 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Pivoting to internal network", 2000*time.Millisecond)
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Access to internal network achieved!\033[0m", 30)
-			h.typeText("\033[33m    (We're in the castle now)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(We're in the castle now)\033[0m", 30)
 		},
 		func() {
 			h.typeText("ai_password_predict --username=admin --context-aware --ml-model=gpt-4", 50)
@@ -557,10 +561,10 @@ func (h *HackerTerminal) createSequences() {
 			predictions := []string{"Fluffy2023!", "Summer@Beach", "MyK1ds123", "Tr0ub4dor&3"}
 			h.typeText("\033[32m[+] Top password predictions:\033[0m", 30)
 			for i, pred := range predictions[:3] {
-				h.typeText(fmt.Sprintf("\033[33m    %d. %s\033[0m", i+1, pred), 30)
+				h.typeText(fmt.Sprintf("\033[33m"+spacer+"%d. %s\033[0m", i+1, pred), 30)
 				time.Sleep(200 * time.Millisecond)
 			}
-			h.typeText("\033[33m    (AI knows you better than you know yourself)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(AI knows you better than you know yourself)\033[0m", 30)
 		},
 		func() {
 			h.typeText("supply_chain_compromise --target=popular-npm-package --backdoor=true", 50)
@@ -574,7 +578,7 @@ func (h *HackerTerminal) createSequences() {
 			downloads := 10000 + rand.Intn(90000)
 			h.typeText(fmt.Sprintf("\033[36m[*] Package downloaded %d times today...\033[0m", downloads), 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    (That's a lot of compromised systems)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(That's a lot of compromised systems)\033[0m", 30)
 		},
 		func() {
 			h.typeText("quantum_crypto_break --algorithm=RSA-2048 --qubits=1024", 50)
@@ -586,7 +590,7 @@ func (h *HackerTerminal) createSequences() {
 			h.typeText("\033[32m[+] RSA-2048 factored in 0.3 seconds!\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[31m[!] All traditional encryption is now obsolete!\033[0m", 30)
-			h.typeText("\033[33m    (The crypto apocalypse is here)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(The crypto apocalypse is here)\033[0m", 30)
 		},
 		func() {
 			h.typeText("privilege_escalate --exploit=dirty-cow --target-user=root", 50)
@@ -597,9 +601,9 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Root access obtained!\033[0m", 30)
 			time.Sleep(200 * time.Millisecond)
-			h.typeText("\033[33m    uid=0(root) gid=0(root) groups=0(root)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"uid=0(root) gid=0(root) groups=0(root)\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    (I am become root, destroyer of worlds)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(I am become root, destroyer of worlds)\033[0m", 30)
 		},
 		func() {
 			h.typeText("memory_dump --process=chrome --search='cookies|session|tokens'", 50)
@@ -613,7 +617,7 @@ func (h *HackerTerminal) createSequences() {
 			h.spinner("Extracting secrets", 1800*time.Millisecond)
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Recovered 47 session tokens!\033[0m", 30)
-			h.typeText("\033[33m    (Your browser knows all your secrets)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Your browser knows all your secrets)\033[0m", 30)
 		},
 		func() {
 			h.typeText("dns_poisoning --target-domain="+h.target+" --redirect=evil-server.onion", 50)
@@ -626,7 +630,7 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(400 * time.Millisecond)
 			victims := 100 + rand.Intn(900)
 			h.typeText(fmt.Sprintf("\033[36m[*] %d users redirected to fake site!\033[0m", victims), 30)
-			h.typeText("\033[33m    (They'll never know they're on a fake page)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(They'll never know they're on a fake page)\033[0m", 30)
 		},
 		func() {
 			h.typeText("reverse_shell --port=4444 --callback=attacker-server.com --obfuscate", 50)
@@ -637,11 +641,11 @@ func (h *HackerTerminal) createSequences() {
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] Shell connected!\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    bash-5.1$ whoami\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"bash-5.1$ whoami\033[0m", 30)
 			time.Sleep(200 * time.Millisecond)
-			h.typeText("\033[33m    root\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"root\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
-			h.typeText("\033[33m    (Sweet, sweet shell access)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Sweet, sweet shell access)\033[0m", 30)
 		},
 		func() {
 			h.typeText("forensics_wipe --anti-forensic --secure-delete --cover-tracks", 50)
@@ -654,7 +658,7 @@ func (h *HackerTerminal) createSequences() {
 			}
 			time.Sleep(300 * time.Millisecond)
 			h.typeText("\033[32m[+] All traces eliminated!\033[0m", 30)
-			h.typeText("\033[33m    (It's like we were never here)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(It's like we were never here)\033[0m", 30)
 		},
 		func() {
 			// List of common manual pages to try
@@ -672,7 +676,7 @@ func (h *HackerTerminal) createSequences() {
 			if err != nil || len(output) == 0 {
 				h.typeText("\033[31m[!] ERROR: Manual page not found or man command unavailable\033[0m", 30)
 				time.Sleep(300 * time.Millisecond)
-				h.typeText("\033[33m    (Even hackers need to RTFM sometimes)\033[0m", 30)
+				h.typeText("\033[33m"+spacer+"(Even hackers need to RTFM sometimes)\033[0m", 30)
 				return
 			}
 
@@ -702,12 +706,12 @@ func (h *HackerTerminal) createSequences() {
 			for i := startLine; i < len(lines) && linesDisplayed < numLines; i++ {
 				line := lines[i]
 				// Trim long lines to reasonable length
-				width := getTerminalWidth() - 4 // 4 is for spaces
+				width := getTerminalWidth() - len(spacer)
 				if len(line) > width {
 					line = line[:width-3] + "..."
 				}
 				if strings.TrimSpace(line) != "" {
-					h.typeText(fmt.Sprintf("\033[33m    %s\033[0m", line), 15)
+					h.typeText(fmt.Sprintf("\033[33m"+spacer+"%s\033[0m", line), 15)
 					linesDisplayed++
 					time.Sleep(50 * time.Millisecond)
 				}
@@ -715,7 +719,7 @@ func (h *HackerTerminal) createSequences() {
 
 			time.Sleep(500 * time.Millisecond)
 			h.typeText(fmt.Sprintf("\033[32m[+] Manual for '%s' extracted successfully!\033[0m", selectedMan), 30)
-			h.typeText("\033[33m    (Knowledge is power... and also in /usr/share/man)\033[0m", 30)
+			h.typeText("\033[33m"+spacer+"(Knowledge is power... and also in /usr/share/man)\033[0m", 30)
 		},
 	}
 }
