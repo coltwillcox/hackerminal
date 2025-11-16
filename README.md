@@ -46,6 +46,7 @@
 - 🌐 Fake IP scanning
 - 🎨 ANSI color codes for dramatic output
 - 📺 Random screen glitch effects (static, corruption artifacts, horizontal tears)
+- 🖥️ CRT scan lines effect (simulates old phosphor monitor with alternating dim lines)
 
 ## 🚀 Installation
 

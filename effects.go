@@ -168,3 +168,66 @@ func (h *HackerTerminal) screenGlitch() {
 		fmt.Print("\033[1A\033[2K") // Move up and clear line
 	}
 }
+
+func (h *HackerTerminal) crtScanLines() {
+	width := getTerminalWidth()
+	numLines := 8 + rand.Intn(12) // 8-19 lines of scan effect
+
+	// CRT phosphor green colors with varying intensity
+	brightLine := "\033[38;5;46m"   // Bright green (phosphor glow)
+	dimLine := "\033[38;5;22m"      // Dim green (scan line shadow)
+	veryDimLine := "\033[38;5;234m" // Very dim (almost black scan line)
+
+	// Generate some fake "data" characters
+	dataChars := "01█▓▒░│┤┐└┴┬├─┼"
+
+	fmt.Println("\033[36m[*] Initializing CRT display mode...\033[0m")
+	time.Sleep(300 * time.Millisecond)
+
+	for i := range numLines {
+		line := ""
+
+		// Create scan line pattern - alternating bright and dim
+		if i%2 == 0 {
+			// Bright scan line with data
+			line += brightLine
+			dataLen := rand.Intn(width / 2)
+			padding := rand.Intn(width - dataLen - 10)
+			line += strings.Repeat(" ", padding)
+
+			// Add some "data" on bright lines
+			for range dataLen {
+				if rand.Float32() > 0.7 {
+					line += string(dataChars[rand.Intn(len(dataChars))])
+				} else {
+					line += " "
+				}
+			}
+		} else {
+			// Dim scan line (the dark gap between phosphor lines)
+			if rand.Float32() > 0.3 {
+				line += dimLine
+				// Occasional horizontal line to simulate scan
+				line += strings.Repeat("─", width)
+			} else {
+				line += veryDimLine
+				line += strings.Repeat("▁", width)
+			}
+		}
+
+		fmt.Printf("%s\033[0m\n", line)
+		time.Sleep(time.Duration(20+rand.Intn(40)) * time.Millisecond)
+	}
+
+	// Simulate CRT refresh flicker
+	time.Sleep(200 * time.Millisecond)
+	fmt.Print("\033[?5h") // Reverse video (flash)
+	time.Sleep(50 * time.Millisecond)
+	fmt.Print("\033[?5l") // Normal video
+	time.Sleep(100 * time.Millisecond)
+
+	// Clear the scan lines
+	for range numLines + 1 { // +1 for the initial message
+		fmt.Print("\033[1A\033[2K")
+	}
+}

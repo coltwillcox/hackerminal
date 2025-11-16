@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	spacer       = "    "
-	glitchChance = 0.1
+	spacer        = "    "
+	glitchChance  = 0.1
+	crtScanChance = 0.01
 )
 
 func (h *HackerTerminal) createSequences() {
@@ -726,9 +727,12 @@ func (h *HackerTerminal) createSequences() {
 }
 
 func (h *HackerTerminal) runSequence() {
-	// Random chance for screen glitch before prompt
-	if rand.Float32() < glitchChance {
+	// Random chance for visual effects before prompt
+	effectRoll := rand.Float32()
+	if effectRoll < glitchChance {
 		h.screenGlitch()
+	} else if effectRoll < glitchChance+crtScanChance {
+		h.crtScanLines()
 	}
 
 	h.showPrompt()
@@ -738,10 +742,14 @@ func (h *HackerTerminal) runSequence() {
 	sequence := h.sequences[rand.Intn(len(h.sequences))]
 	sequence()
 
-	// Random chance for screen glitch after sequence
-	if rand.Float32() < glitchChance {
+	// Random chance for visual effects after sequence
+	effectRoll = rand.Float32()
+	if effectRoll < glitchChance {
 		time.Sleep(200 * time.Millisecond)
 		h.screenGlitch()
+	} else if effectRoll < glitchChance+crtScanChance {
+		time.Sleep(200 * time.Millisecond)
+		h.crtScanLines()
 	}
 
 	time.Sleep(1 * time.Second)
