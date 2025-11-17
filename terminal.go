@@ -85,7 +85,51 @@ func (h *HackerTerminal) typeCommand(text string, delayMs int) {
 		'z': {'a', 's', 'x'},
 	}
 
+	// Calculate variable typing speed based on character complexity
+	getCharDelay := func(char rune) int {
+		baseDelay := delayMs
+
+		switch {
+		// Common lowercase letters (home row and frequent) - fastest
+		case char == 'a' || char == 's' || char == 'd' || char == 'f' ||
+			char == 'e' || char == 't' || char == 'n' || char == 'o' ||
+			char == 'i' || char == 'r' || char == 'l':
+			return baseDelay - rand.Intn(typeSpeed1)
+
+		// Common punctuation (space, dash, underscore, dot) - fairly fast
+		case char == ' ' || char == '-' || char == '_' || char == '.':
+			return baseDelay + rand.Intn(typeSpeed2)
+
+		// Other lowercase letters - normal speed
+		case char >= 'a' && char <= 'z':
+			return baseDelay + rand.Intn(typeSpeed3)
+
+		// Numbers - moderate slowdown
+		case char >= '0' && char <= '9':
+			return baseDelay + 15 + rand.Intn(typeSpeed4)
+
+		// Uppercase letters - slower (need shift key)
+		case char >= 'A' && char <= 'Z':
+			return baseDelay + 20 + rand.Intn(typeSpeed5)
+
+		// Special characters requiring shift or hard to reach - slowest
+		case char == '!' || char == '@' || char == '#' || char == '$' ||
+			char == '%' || char == '^' || char == '&' || char == '*' ||
+			char == '(' || char == ')' || char == '+' || char == '=' ||
+			char == '{' || char == '}' || char == '[' || char == ']' ||
+			char == '|' || char == '\\' || char == ':' || char == ';' ||
+			char == '"' || char == '\'' || char == '<' || char == '>' ||
+			char == '?' || char == '/' || char == '~' || char == '`':
+			return baseDelay + 30 + rand.Intn(typeSpeed6)
+
+		default:
+			return baseDelay + rand.Intn(typeSpeed0)
+		}
+	}
+
 	for i, char := range text {
+		charDelay := getCharDelay(char)
+
 		if rand.Float32() < chanceTypo && i < len(text)-1 {
 			lowerChar := char
 			if char >= 'A' && char <= 'Z' {
@@ -100,7 +144,7 @@ func (h *HackerTerminal) typeCommand(text string, delayMs int) {
 					typoChar = typoChar - 32
 				}
 				fmt.Print(string(typoChar))
-				time.Sleep(time.Duration(delayMs) * time.Millisecond)
+				time.Sleep(time.Duration(charDelay) * time.Millisecond)
 
 				// Brief pause before noticing the mistake
 				time.Sleep(time.Duration(100+rand.Intn(200)) * time.Millisecond)
@@ -111,13 +155,13 @@ func (h *HackerTerminal) typeCommand(text string, delayMs int) {
 
 				// Now type the correct character
 				fmt.Print(string(char))
-				time.Sleep(time.Duration(delayMs) * time.Millisecond)
+				time.Sleep(time.Duration(charDelay) * time.Millisecond)
 				continue
 			}
 		}
 
 		fmt.Print(string(char))
-		time.Sleep(time.Duration(delayMs) * time.Millisecond)
+		time.Sleep(time.Duration(charDelay) * time.Millisecond)
 	}
 	fmt.Println()
 }
