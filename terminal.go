@@ -257,12 +257,22 @@ func (h *HackerTerminal) showBanner() {
 ╚═══════════════════════════════════════════════════════════════╝
 `
 
+	h.drawCentered(banner, "\033[38;5;46m", 1000, false)
+}
+
+func (h *HackerTerminal) drawCentered(image, color string, hold int64, clear bool) {
+	// Get terminal width for centering
 	termWidth := getTerminalWidth()
-	lines := strings.Split(banner, "\n")
+
+	// Split art into lines and display centered
+	lines := strings.Split(image, "\n")
+
+	// Find maximum line width for consistent centering
 	maxLineLen := 0
 	for _, line := range lines {
 		maxLineLen = max(maxLineLen, visibleLength(line))
 	}
+
 	padding := max((termWidth-maxLineLen)/2, 0)
 
 	for _, line := range lines {
@@ -271,8 +281,16 @@ func (h *HackerTerminal) showBanner() {
 			continue
 		}
 		fmt.Print(strings.Repeat(" ", padding))
-		fmt.Println("\033[38;5;46m" + line)
+		fmt.Printf("%s%s\033[0m\n", color, line)
 	}
 
-	time.Sleep(1 * time.Second)
+	// Hold the splash for a moment
+	time.Sleep(time.Duration(hold) * time.Millisecond)
+
+	// Clear the splash screen
+	if clear {
+		for range len(lines) {
+			fmt.Print("\033[1A\033[2K")
+		}
+	}
 }

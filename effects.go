@@ -367,35 +367,188 @@ func (h *HackerTerminal) asciiSplash() {
 
 	// Select random artwork
 	selected := artworks[rand.Intn(len(artworks))]
+	h.drawCentered(selected.art, selected.color, 1500, true)
+}
 
-	// Get terminal width for centering
-	termWidth := getTerminalWidth()
+func (h *HackerTerminal) networkTopology() {
+	// Collection of network topology ASCII art diagrams
+	topologies := []struct {
+		title        string
+		colorTitle   string
+		colorDiagram string
+		diagram      string
+	}{
+		{
+			title:        "COMPROMISED NETWORK MAP",
+			colorDiagram: "\033[36m",
+			colorTitle:   "\033[33m",
+			diagram: `
+           ┌─────────┐
+           │INTERNET │
+           └────┬────┘
+                │
+           ┌────┴────┐
+           │FIREWALL │ ◄── BYPASSED
+           └────┬────┘
+                │
+     ┌──────────┼──────────┐
+     │          │          │
+┌────┴────┐┌────┴────┐┌────┴────┐
+│  DMZ    ││  CORE   ││ BACKUP  │
+│ SERVER  ││ ROUTER  ││ SERVER  │
+└─────────┘└────┬────┘└─────────┘
+                │
+           ┌────┴────┐
+           │ SWITCH  │
+           └────┬────┘
+                │
+     ┌──────────┼──────────┐
+     │          │          │
+┌────┴────┐┌────┴────┐┌────┴────┐
+│ WEB APP ││DATABASE ││  FILE   │
+│ [OWNED] ││ [OWNED] ││ SERVER  │
+└─────────┘└─────────┘└─────────┘
+`,
+		},
+		{
+			title:        "ATTACK VECTOR PATH",
+			colorDiagram: "\033[36m",
+			colorTitle:   "\033[33m",
+			diagram: `
+┌─────────┐         ┌─────────┐         ┌─────────┐
+│ATTACKER │ ──────► │  PROXY  │ ──────► │ TARGET  │
+│  (YOU)  │   TOR   │  CHAIN  │  SOCKS  │ NETWORK │
+└─────────┘         └─────────┘         └────┬────┘
+                                             │
+                                             ▼
+                                        ┌─────────┐
+                                        │  EDGE   │
+                                        │ ROUTER  │
+                                        └────┬────┘
+                                             │
+                          ┌──────────────────┼────────────┐
+                          │                  │            │
+                          ▼                  ▼            ▼
+                     ┌─────────┐       ┌─────────┐  ┌─────────┐
+                     │ WEBSVR  │       │  MAIL   │  │  DNS    │
+                     │ [PWN3D] │       │ [PWN3D] │  │ SERVER  │
+                     └─────────┘       └─────────┘  └─────────┘
+`,
+		},
+		{
+			title:        "LATERAL MOVEMENT MAP",
+			colorDiagram: "\033[36m",
+			colorTitle:   "\033[33m",
+			diagram: `
+┌─────────┐                              ┌──────────┐
+│  ENTRY  │ ═══════════════════════════► │ DOMAIN   │
+│  POINT  │        CREDENTIAL REUSE      │CONTROLLER│
+└────┬────┘                              └────┬─────┘
+     │                                        │
+     │ SSH                                    │ LDAP
+     ▼                                        ▼
+┌─────────┐         ┌─────────┐          ┌─────────┐
+│  DEV    │ ──────► │  PROD   │ ───────► │  ADMIN  │
+│ MACHINE │ RDP     │ SERVER  │   WMI    │ CONSOLE │
+└─────────┘         └────┬────┘          └─────────┘
+                         │
+                         │ SMB
+                         ▼
+                    ┌─────────┐
+                    │  FILE   │
+                    │  SHARE  │ ◄── EXFILTRATING...
+                    └─────────┘
+`,
+		},
+		{
+			title:        "BOTNET COMMAND & CONTROL",
+			colorDiagram: "\033[36m",
+			colorTitle:   "\033[33m",
+			diagram: `
+               ┌─────────┐
+               │   C2    │
+               │ SERVER  │
+               └────┬────┘
+                    │
+     ┌──────────────┼──────────────┐
+     │              │              │
+     ▼              ▼              ▼
+┌─────────┐    ┌─────────┐    ┌─────────┐
+│  BOT 1  │    │  BOT 2  │    │  BOT 3  │
+│ ZOMBIE  │    │ ZOMBIE  │    │ ZOMBIE  │
+└────┬────┘    └────┬────┘    └────┬────┘
+     │              │              │
+┌────┴────┐    ┌────┴────┐    ┌────┴────┐
+│   10K   │    │   25K   │    │   15K   │
+│  HOSTS  │    │  HOSTS  │    │  HOSTS  │
+└─────────┘    └─────────┘    └─────────┘
+                    │
+                    ▼
+           ╔═════════════════╗
+           ║  TARGET: DDoS   ║
+           ║  STATUS: ACTIVE ║
+           ╚═════════════════╝
+`,
+		},
+		{
+			title:        "INTERNAL NETWORK SCAN",
+			colorDiagram: "\033[36m",
+			colorTitle:   "\033[33m",
+			diagram: `
+    ╔═══════════════════════════════════════════════════╗
+    ║           NETWORK SEGMENT: 192.168.1.0/24         ║
+    ╚═══════════════════════════════════════════════════╝
 
-	// Split art into lines and display centered
-	lines := strings.Split(selected.art, "\n")
-
-	// Find maximum line width for consistent centering
-	maxLineLen := 0
-	for _, line := range lines {
-		maxLineLen = max(maxLineLen, visibleLength(line))
+.10 ┌───┐  .20 ┌───┐  .30 ┌───┐  .40 ┌───┐  .50 ┌───┐
+    │ R │      │ S │      │ W │      │ D │      │ P │
+    │ O │      │ E │      │ E │      │ A │      │ R │
+    │ U │      │ R │      │ B │      │ T │      │ I │
+    │ T │      │ V │      │   │      │ A │      │ N │
+    │ E │      │ E │      │   │      │ B │      │ T │
+    │ R │      │ R │      │   │      │ A │      │ E │
+    │   │      │   │      │   │      │ S │      │ R │
+    │   │      │   │      │   │      │ E │      │   │
+    └─┬─┘      └─┬─┘      └─┬─┘      └─┬─┘      └─┬─┘
+      │          │          │          │          │
+══════╪══════════╪══════════╪══════════╪══════════╪══════
+      │          │          │          │          │
+   [OPEN]     [OPEN]     [OPEN]     [OPEN]     [OPEN]
+   22,80      22,443     80,443      3306     515,9100
+`,
+		},
+		{
+			title:        "VPN TUNNEL ARCHITECTURE",
+			colorDiagram: "\033[36m",
+			colorTitle:   "\033[33m",
+			diagram: `
+┌─────────────┐                        ┌─────────────┐
+│   HACKER    │                        │   VICTIM    │
+│   NETWORK   │                        │   NETWORK   │
+└──────┬──────┘                        └──────┬──────┘
+       │                                      │
+       ▼                                      ▼
+┌─────────────┐  ◄════ ENCRYPTED ════► ┌─────────────┐
+│ VPN CLIENT  │        TUNNEL          │  VPN SERVER │
+│  (OpenVPN)  │                        │             │
+└──────┬──────┘                        └──────┬──────┘
+       │                                      │
+       │         ┌─────────────┐              │
+       └────────►│   REVERSE   │◄─────────────┘
+                 │    SHELL    │
+                 │ ESTABLISHED │
+                 └─────────────┘
+                        │
+                        ▼
+                ╔═══════════════╗
+                ║  FULL ACCESS  ║
+                ║    GRANTED    ║
+                ╚═══════════════╝
+`,
+		},
 	}
 
-	padding := max((termWidth-maxLineLen)/2, 0)
-
-	for _, line := range lines {
-		if line == "" {
-			fmt.Println()
-			continue
-		}
-		fmt.Print(strings.Repeat(" ", padding))
-		fmt.Printf("%s%s\033[0m\n", selected.color, line)
-	}
-
-	// Hold the splash for a moment
-	time.Sleep(1500 * time.Millisecond)
-
-	// Clear the splash screen
-	for range len(lines) {
-		fmt.Print("\033[1A\033[2K")
-	}
+	// Select random topology
+	selected := topologies[rand.Intn(len(topologies))]
+	h.drawCentered(selected.title, selected.colorTitle, 0, false)
+	h.drawCentered(selected.diagram, selected.colorDiagram, 1500, false)
 }

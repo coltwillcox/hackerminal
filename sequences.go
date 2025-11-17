@@ -730,6 +730,8 @@ func (h *HackerTerminal) runSequence() {
 		h.crtScanLines()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash {
 		h.asciiSplash()
+	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology {
+		h.networkTopology()
 	}
 
 	h.showPrompt()
@@ -750,6 +752,9 @@ func (h *HackerTerminal) runSequence() {
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash {
 		time.Sleep(200 * time.Millisecond)
 		h.asciiSplash()
+	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology {
+		time.Sleep(200 * time.Millisecond)
+		h.networkTopology()
 	}
 
 	time.Sleep(1 * time.Second)
