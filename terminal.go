@@ -54,6 +54,74 @@ func (h *HackerTerminal) typeText(text string, delayMs int) {
 	fmt.Println()
 }
 
+func (h *HackerTerminal) typeCommand(text string, delayMs int) {
+	// Adjacent keys on QWERTY keyboard for realistic typos
+	adjacentKeys := map[rune][]rune{
+		'a': {'s', 'q', 'z', 'w'},
+		'b': {'v', 'g', 'h', 'n'},
+		'c': {'x', 'd', 'f', 'v'},
+		'd': {'s', 'e', 'r', 'f', 'c', 'x'},
+		'e': {'w', 'r', 'd', 's'},
+		'f': {'d', 'r', 't', 'g', 'v', 'c'},
+		'g': {'f', 't', 'y', 'h', 'b', 'v'},
+		'h': {'g', 'y', 'u', 'j', 'n', 'b'},
+		'i': {'u', 'o', 'k', 'j'},
+		'j': {'h', 'u', 'i', 'k', 'm', 'n'},
+		'k': {'j', 'i', 'o', 'l', 'm'},
+		'l': {'k', 'o', 'p'},
+		'm': {'n', 'j', 'k'},
+		'n': {'b', 'h', 'j', 'm'},
+		'o': {'i', 'p', 'l', 'k'},
+		'p': {'o', 'l'},
+		'q': {'w', 'a'},
+		'r': {'e', 't', 'f', 'd'},
+		's': {'a', 'w', 'e', 'd', 'x', 'z'},
+		't': {'r', 'y', 'g', 'f'},
+		'u': {'y', 'i', 'j', 'h'},
+		'v': {'c', 'f', 'g', 'b'},
+		'w': {'q', 'e', 's', 'a'},
+		'x': {'z', 's', 'd', 'c'},
+		'y': {'t', 'u', 'h', 'g'},
+		'z': {'a', 's', 'x'},
+	}
+
+	for i, char := range text {
+		if rand.Float32() < chanceTypo && i < len(text)-1 {
+			lowerChar := char
+			if char >= 'A' && char <= 'Z' {
+				lowerChar = char + 32 // Convert to lowercase for lookup
+			}
+
+			if adjacent, ok := adjacentKeys[lowerChar]; ok {
+				// Type the wrong character
+				typoChar := adjacent[rand.Intn(len(adjacent))]
+				// Preserve case
+				if char >= 'A' && char <= 'Z' {
+					typoChar = typoChar - 32
+				}
+				fmt.Print(string(typoChar))
+				time.Sleep(time.Duration(delayMs) * time.Millisecond)
+
+				// Brief pause before noticing the mistake
+				time.Sleep(time.Duration(100+rand.Intn(200)) * time.Millisecond)
+
+				// Backspace to delete the typo
+				fmt.Print("\b \b")
+				time.Sleep(time.Duration(50+rand.Intn(100)) * time.Millisecond)
+
+				// Now type the correct character
+				fmt.Print(string(char))
+				time.Sleep(time.Duration(delayMs) * time.Millisecond)
+				continue
+			}
+		}
+
+		fmt.Print(string(char))
+		time.Sleep(time.Duration(delayMs) * time.Millisecond)
+	}
+	fmt.Println()
+}
+
 func (h *HackerTerminal) randomPause() {
 	// Random delay between 200ms and 2000ms to simulate thinking
 	delay := 200 + rand.Intn(1800)
