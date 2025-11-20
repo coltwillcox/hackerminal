@@ -243,7 +243,56 @@ func (h *HackerTerminal) showPrompt() {
 }
 
 func (h *HackerTerminal) showBanner() {
+	// Display dashboard stats before banner
+	h.showDashboard()
+
+	// Display main banner
 	h.drawCentered(banner, "\033[38;5;46m", 1000, false)
+}
+
+func (h *HackerTerminal) showDashboard() {
+	termWidth := getTerminalWidth()
+
+	// Generate random stats
+	cpuUsage := 85.0 + rand.Float64()*14.0 // 85-99%
+	memUsage := 1.5 + rand.Float64()*2.0   // 1.5-3.5 GB
+	uptime := 1 + rand.Intn(99)            // 1-99 hours
+	threats := rand.Intn(150)              // 0-149
+	connActive := 100 + rand.Intn(999)     // 100-1098
+	pktsPerSec := 1000 + rand.Intn(9000)   // 1000-9999
+
+	// Left side stats
+	leftStats := []string{
+		"\033[32m●\033[0m SYS:ONLINE",
+		"\033[33m▲\033[0m NET:BREACH",
+		"\033[31m◆\033[0m FW:BYPASSED",
+		"\033[36m◉\033[0m PORT:4444",
+	}
+
+	// Right side stats
+	rightStats := []string{
+		fmt.Sprintf("CPU:\033[33m%.1f%%\033[0m", cpuUsage),
+		fmt.Sprintf("MEM:\033[36m%.1fGB\033[0m", memUsage),
+		fmt.Sprintf("UP:\033[32m%dh\033[0m", uptime),
+		fmt.Sprintf("THR:\033[31m%d\033[0m", threats),
+	}
+
+	// Bottom stats bar
+	bottomStats := fmt.Sprintf("PROTO:\033[36mTCP/IP\033[0m | CONN:\033[36m%d\033[0m | PKT/s:\033[36m%d\033[0m | TARGET:\033[36m%s\033[0m", connActive, pktsPerSec, h.target)
+
+	// Display top stats (left and right aligned)
+	for i := range leftStats {
+		leftLen := visibleLength(leftStats[i])
+		rightLen := visibleLength(rightStats[i])
+		spacing := max(termWidth-leftLen-rightLen, 1)
+		fmt.Printf("%s%s%s\n", leftStats[i], strings.Repeat(" ", spacing), rightStats[i])
+	}
+
+	// Display bottom stats bar (centered)
+	bottomLen := visibleLength(bottomStats)
+	padding := max((termWidth-bottomLen)/2, 0)
+	fmt.Print(strings.Repeat(" ", padding))
+	fmt.Println(bottomStats)
 }
 
 func (h *HackerTerminal) drawCentered(image, color string, hold int64, clear bool) {

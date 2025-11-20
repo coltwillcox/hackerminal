@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
+	// Clear terminal screen
+	fmt.Print("\033[H\033[2J")
+
 	terminal := NewHackerTerminal()
 	terminal.showBanner()
 

@@ -87,7 +87,7 @@ func (h *HackerTerminal) screenGlitch() {
 	corruptChars := "!@#$%^&*(){}[]|\\/<>?~`"
 	blockChars := "▀▁▂▃▄▅▆▇█▉▊▋▌▍▎▏"
 
-	width := getTerminalWidth()
+	termWidth := getTerminalWidth()
 	glitchLines := 2 + rand.Intn(14) // 2-15 lines of glitch
 
 	// Random glitch colors (bright, eye-catching)
@@ -110,12 +110,12 @@ func (h *HackerTerminal) screenGlitch() {
 		switch glitchType {
 		case 0: // Full static line
 			color := colors[rand.Intn(len(colors))]
-			for range width {
+			for range termWidth {
 				line += string(glitchChars[rand.Intn(len(glitchChars))])
 			}
 			fmt.Printf("%s%s\033[0m\n", color, line)
 		case 1: // Partial corruption (some spaces)
-			for i := range width {
+			for i := range termWidth {
 				if rand.Float32() > 0.3 {
 					color := colors[rand.Intn(len(colors))]
 					line += color + string(corruptChars[rand.Intn(len(corruptChars))]) + "\033[0m"
@@ -130,7 +130,7 @@ func (h *HackerTerminal) screenGlitch() {
 		case 2: // Block corruption
 			color := colors[rand.Intn(len(colors))]
 			blockSize := 5 + rand.Intn(15)
-			startPos := rand.Intn(width - blockSize)
+			startPos := rand.Intn(termWidth - blockSize)
 			line = strings.Repeat(" ", startPos)
 			for range blockSize {
 				line += string(blockChars[rand.Intn(len(blockChars))])
@@ -147,13 +147,13 @@ func (h *HackerTerminal) screenGlitch() {
 					scrambled += string(ch)
 				}
 			}
-			padding := rand.Intn(width - len(scrambled))
+			padding := rand.Intn(termWidth - len(scrambled))
 			color := colors[rand.Intn(len(colors))]
 			fmt.Printf("%s%s%s\033[0m\n", strings.Repeat(" ", padding), color, scrambled)
 		case 4: // Horizontal tear effect
-			tearPoint := rand.Intn(width)
+			tearPoint := rand.Intn(termWidth)
 			leftPart := strings.Repeat("▓", tearPoint)
-			rightPart := strings.Repeat("░", width-tearPoint)
+			rightPart := strings.Repeat("░", termWidth-tearPoint)
 			color1 := colors[rand.Intn(len(colors))]
 			color2 := colors[rand.Intn(len(colors))]
 			fmt.Printf("%s%s%s%s\033[0m\n", color1, leftPart, color2, rightPart)
@@ -170,7 +170,7 @@ func (h *HackerTerminal) screenGlitch() {
 }
 
 func (h *HackerTerminal) crtScanLines() {
-	width := getTerminalWidth()
+	termWidth := getTerminalWidth()
 	numLines := 8 + rand.Intn(12) // 8-19 lines of scan effect
 
 	// CRT phosphor green colors with varying intensity
@@ -191,8 +191,8 @@ func (h *HackerTerminal) crtScanLines() {
 		if i%2 == 0 {
 			// Bright scan line with data
 			line += brightLine
-			dataLen := rand.Intn(width / 2)
-			padding := rand.Intn(width - dataLen - 10)
+			dataLen := rand.Intn(termWidth / 2)
+			padding := rand.Intn(termWidth - dataLen - 10)
 			line += strings.Repeat(" ", padding)
 
 			// Add some "data" on bright lines
@@ -208,10 +208,10 @@ func (h *HackerTerminal) crtScanLines() {
 			if rand.Float32() > 0.3 {
 				line += dimLine
 				// Occasional horizontal line to simulate scan
-				line += strings.Repeat("─", width)
+				line += strings.Repeat("─", termWidth)
 			} else {
 				line += veryDimLine
-				line += strings.Repeat("▁", width)
+				line += strings.Repeat("▁", termWidth)
 			}
 		}
 

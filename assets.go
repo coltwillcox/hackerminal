@@ -234,20 +234,20 @@ var (
        │                                      │
        ▼                                      ▼
 ┌─────────────┐  ◄════ ENCRYPTED ════► ┌─────────────┐
-│ VPN CLIENT  │        TUNNEL          │  VPN SERVER │
+│ VPN CLIENT  │         TUNNEL         │  VPN SERVER │
 │  (OpenVPN)  │                        │             │
 └──────┬──────┘                        └──────┬──────┘
        │                                      │
-       │         ┌─────────────┐              │
-       └────────►│   REVERSE   │◄─────────────┘
-                 │    SHELL    │
-                 │ ESTABLISHED │
-                 └─────────────┘
-                        │
-                        ▼
-                ╔═══════════════╗
-                ║  FULL ACCESS  ║
-                ║    GRANTED    ║
-                ╚═══════════════╝
+       │           ┌─────────────┐            │
+       └──────────►│   REVERSE   │◄───────────┘
+                   │    SHELL    │
+                   │ ESTABLISHED │
+                   └─────────────┘
+                          │
+                          ▼
+                  ╔═══════════════╗
+                  ║  FULL ACCESS  ║
+                  ║    GRANTED    ║
+                  ╚═══════════════╝
 `
 )
