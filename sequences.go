@@ -722,18 +722,6 @@ func (h *HackerTerminal) createSequences() {
 }
 
 func (h *HackerTerminal) runSequence() {
-	// Random chance for visual effects before prompt
-	effectRoll := rand.Float32()
-	if effectRoll < chanceGlitch {
-		h.screenGlitch()
-	} else if effectRoll < chanceGlitch+chanceCrtScan {
-		h.crtScanLines()
-	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash {
-		h.asciiSplash()
-	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology {
-		h.networkTopology()
-	}
-
 	h.showPrompt()
 	h.randomPause()
 
@@ -741,23 +729,8 @@ func (h *HackerTerminal) runSequence() {
 	sequence := h.sequences[rand.Intn(len(h.sequences))]
 	sequence()
 
-	// Random chance for visual effects after sequence
-	effectRoll = rand.Float32()
-	if effectRoll < chanceGlitch {
-		time.Sleep(200 * time.Millisecond)
-		h.screenGlitch()
-	} else if effectRoll < chanceGlitch+chanceCrtScan {
-		time.Sleep(200 * time.Millisecond)
-		h.crtScanLines()
-	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash {
-		time.Sleep(200 * time.Millisecond)
-		h.asciiSplash()
-	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology {
-		time.Sleep(200 * time.Millisecond)
-		h.networkTopology()
-	}
+	h.randomEffect()
 
-	time.Sleep(1 * time.Second)
 	printSeparator()
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(1500 * time.Millisecond)
 }

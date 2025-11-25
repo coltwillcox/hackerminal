@@ -328,3 +328,121 @@ func (h *HackerTerminal) networkTopology() {
 	h.drawCentered(selected.title, selected.colorTitle, 0, false)
 	h.drawCentered(selected.diagram, selected.colorDiagram, 1500, false)
 }
+
+func (h *HackerTerminal) splitScreen() {
+	termWidth := getTerminalWidth()
+	splitPos := termWidth / 2
+
+	// Window titles
+	leftTitle := "WINDOW 1: EXPLOIT"
+	rightTitle := "WINDOW 2: MONITOR"
+
+	// Left and right window activities
+	leftActivities := []string{
+		"[*] Scanning ports...",
+		"[+] Port 22: OPEN",
+		"[+] Port 80: OPEN",
+		"[*] Attempting SSH...",
+		"[+] Credentials found!",
+		"[*] Escalating privileges...",
+		"[+] ROOT ACCESS GRANTED",
+	}
+
+	rightActivities := []string{
+		"[SYS] CPU: 94.2%",
+		"[NET] Packets: 15248",
+		"[MEM] Usage: 2.1GB",
+		"[LOG] Login attempt detected",
+		"[ALERT] Firewall breach!",
+		"[WARN] Unauthorized access",
+		"[CRIT] System compromised",
+	}
+
+	// Colors for windows
+	leftColor := "\033[32m"   // Green
+	rightColor := "\033[36m"  // Cyan
+	borderColor := "\033[33m" // Yellow
+
+	numLines := 12
+
+	// Draw top border
+	leftBorder := strings.Repeat("═", splitPos-2)
+	rightBorder := strings.Repeat("═", termWidth-splitPos-2)
+	fmt.Printf("%s╔%s╦%s╗\033[0m\n", borderColor, leftBorder, rightBorder)
+
+	// Draw window titles
+	leftTitleLeftMargin := (splitPos - len(leftTitle) - 2) / 2
+	leftTitleRightMargin := visibleLength(leftBorder) - len(leftTitle) - leftTitleLeftMargin
+	rightTitleLeftMargin := (termWidth - splitPos - len(rightTitle) - 2) / 2
+	rightTitleRightMargin := visibleLength(rightBorder) - len(rightTitle) - rightTitleLeftMargin
+	leftTitleFull := fmt.Sprintf("%s%s%s%s%s", strings.Repeat(" ", leftTitleLeftMargin), leftColor, leftTitle, "\033[0m"+borderColor, strings.Repeat(" ", leftTitleRightMargin))
+	rightTitleFull := fmt.Sprintf("%s%s%s%s%s", strings.Repeat(" ", rightTitleLeftMargin), rightColor, rightTitle, "\033[0m"+borderColor, strings.Repeat(" ", rightTitleRightMargin))
+	fmt.Printf("%s║%s║%s║\033[0m\n", borderColor, leftTitleFull, rightTitleFull)
+
+	// Draw separator
+	fmt.Printf("%s╠%s╬%s╣\033[0m\n", borderColor, leftBorder, rightBorder)
+
+	// Draw content lines
+	for i := range numLines {
+		// Left window content
+		var leftContent string
+		if i < len(leftActivities) {
+			leftContent = leftActivities[i]
+		} else {
+			leftContent = ""
+		}
+
+		// Right window content
+		var rightContent string
+		if i < len(rightActivities) {
+			rightContent = rightActivities[i]
+		} else {
+			rightContent = ""
+		}
+
+		// Pad content to fit window width
+		leftLen := visibleLength(leftContent)
+		rightLen := visibleLength(rightContent)
+
+		leftSpace := splitPos - leftLen - 3
+		rightSpace := termWidth - splitPos - rightLen - 3
+
+		fmt.Printf("%s║\033[0m %s%s%s%s%s║\033[0m %s%s%s%s%s║\033[0m\n",
+			borderColor,
+			leftColor, leftContent, "\033[0m",
+			strings.Repeat(" ", max(leftSpace, 0)),
+			borderColor,
+			rightColor, rightContent, "\033[0m",
+			strings.Repeat(" ", max(rightSpace, 0)),
+			borderColor)
+
+		time.Sleep(150 * time.Millisecond)
+	}
+
+	// Draw bottom border
+	fmt.Printf("%s╚%s╩%s╝\033[0m\n", borderColor, leftBorder, rightBorder)
+
+	// Hold for viewing
+	time.Sleep(2000 * time.Millisecond)
+}
+
+func (h *HackerTerminal) randomEffect() {
+	// Random chance for visual effects
+	effectRoll := rand.Float32()
+	if effectRoll < chanceGlitch {
+		time.Sleep(200 * time.Millisecond)
+		h.screenGlitch()
+	} else if effectRoll < chanceGlitch+chanceCrtScan {
+		time.Sleep(200 * time.Millisecond)
+		h.crtScanLines()
+	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash {
+		time.Sleep(200 * time.Millisecond)
+		h.asciiSplash()
+	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology {
+		time.Sleep(200 * time.Millisecond)
+		h.networkTopology()
+	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology+chanceSplitScreen {
+		time.Sleep(200 * time.Millisecond)
+		h.splitScreen()
+	}
+}
