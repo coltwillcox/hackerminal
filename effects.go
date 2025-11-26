@@ -426,6 +426,93 @@ func (h *HackerTerminal) splitScreen() {
 	time.Sleep(2000 * time.Millisecond)
 }
 
+// Hacker-themed directory structures
+func (h *HackerTerminal) fileTree() {
+	title := titles[rand.Intn(len(titles))]
+	root := roots[rand.Intn(len(roots))]
+
+	rand.Shuffle(len(dirs), func(i, j int) {
+		dirs[i], dirs[j] = dirs[j], dirs[i]
+	})
+	selectedDirs := dirs[:rand.Intn(len(dirs)-2)+2]
+
+	rand.Shuffle(len(files), func(i, j int) {
+		files[i], files[j] = files[j], files[i]
+	})
+	selectedFiles := files[:rand.Intn(len(files)-2)+2]
+
+	// Display title
+	h.drawCentered(title, "\033[33m", 0, false)
+	printSeparator()
+
+	// Display root with tree icon
+	fmt.Printf("\033[36m📁 %s\033[0m\n", root)
+	time.Sleep(200 * time.Millisecond)
+
+	for _, dir := range selectedDirs {
+		icon := "📁"
+		color := "\033[36m" // Cyan for directories
+		prefix := "├── "
+
+		fmt.Printf("\033[90m%s\033[0m%s %s%s\033[0m", prefix, icon, color, dir)
+
+		printSeparator()
+		time.Sleep(time.Duration(100+rand.Intn(150)) * time.Millisecond)
+	}
+
+	for i, file := range selectedFiles {
+		var icon string
+		var color string
+		if strings.HasSuffix(file, ".txt") || strings.HasSuffix(file, ".log") {
+			icon = "📄"
+			color = "\033[37m" // White
+		} else if strings.HasSuffix(file, ".pdf") || strings.HasSuffix(file, ".doc") {
+			icon = "📋"
+			color = "\033[93m" // Yellow
+		} else if strings.HasSuffix(file, ".sql") || strings.HasSuffix(file, ".db") {
+			icon = "🗄️"
+			color = "\033[35m" // Magenta
+		} else if strings.HasSuffix(file, ".key") || strings.HasSuffix(file, ".pem") || strings.HasSuffix(file, ".gpg") {
+			icon = "🔑"
+			color = "\033[31m" // Red
+		} else if strings.HasSuffix(file, ".zip") || strings.HasSuffix(file, ".tar") || strings.HasSuffix(file, ".gz") {
+			icon = "📦"
+			color = "\033[33m" // Yellow
+		} else if strings.HasSuffix(file, ".json") || strings.HasSuffix(file, ".xml") || strings.HasSuffix(file, ".conf") {
+			icon = "⚙️"
+			color = "\033[36m" // Cyan
+		} else {
+			icon = "📄"
+			color = "\033[32m" // Green
+		}
+
+		isLast := i == len(selectedFiles)-1
+
+		// Tree characters
+		var prefix string
+		if isLast {
+			prefix = "└── "
+		} else {
+			prefix = "├── "
+		}
+
+		fmt.Printf("\033[90m%s\033[0m%s %s%s\033[0m", prefix, icon, color, file)
+
+		size := rand.Intn(9999) + 1
+		unit := []string{"KB", "MB"}[rand.Intn(2)]
+		fmt.Printf(" \033[90m(%d %s)\033[0m", size, unit)
+
+		printSeparator()
+		time.Sleep(time.Duration(100+rand.Intn(150)) * time.Millisecond)
+	}
+
+	printSeparator()
+
+	fmt.Println(summaries[rand.Intn(len(summaries))])
+
+	time.Sleep(1500 * time.Millisecond)
+}
+
 func (h *HackerTerminal) randomEffect() {
 	// Random chance for visual effects
 	effectRoll := rand.Float32()
@@ -444,5 +531,8 @@ func (h *HackerTerminal) randomEffect() {
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology+chanceSplitScreen {
 		time.Sleep(200 * time.Millisecond)
 		h.splitScreen()
+	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology+chanceSplitScreen+chanceFileTree {
+		time.Sleep(200 * time.Millisecond)
+		h.fileTree()
 	}
 }

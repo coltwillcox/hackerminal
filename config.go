@@ -7,6 +7,7 @@ const (
 	chanceAsciiSplash = 0.1
 	chanceTopology    = 0.1
 	chanceSplitScreen = 0.1
+	chanceFileTree    = 0.1
 	chanceTypo        = 0.05
 	typeSpeed0        = 10
 	typeSpeed1        = 10

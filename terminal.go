@@ -51,7 +51,7 @@ func (h *HackerTerminal) typeText(text string, delayMs int) {
 		fmt.Print(string(char))
 		time.Sleep(time.Duration(delayMs) * time.Millisecond)
 	}
-	fmt.Println()
+	printSeparator()
 }
 
 func (h *HackerTerminal) typeCommand(text string, delayMs int) {
@@ -163,7 +163,7 @@ func (h *HackerTerminal) typeCommand(text string, delayMs int) {
 		fmt.Print(string(char))
 		time.Sleep(time.Duration(charDelay) * time.Millisecond)
 	}
-	fmt.Println()
+	printSeparator()
 }
 
 func (h *HackerTerminal) randomPause() {
@@ -312,7 +312,7 @@ func (h *HackerTerminal) drawCentered(image, color string, hold int64, clear boo
 
 	for _, line := range lines {
 		if line == "" {
-			fmt.Println()
+			printSeparator()
 			continue
 		}
 		fmt.Print(strings.Repeat(" ", padding))

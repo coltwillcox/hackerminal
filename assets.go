@@ -251,3 +251,79 @@ var (
                   ╚═══════════════╝
 `
 )
+
+var (
+	titles = []string{
+		"EXPLORING TARGET FILESYSTEM",
+		"SCANNING CONFIDENTIAL DATA",
+		"TRAVERSING SYSTEM FILES",
+		"ENUMERATING CLOUD STORAGE",
+	}
+	roots = []string{
+		"/mnt/cloud/company-data",
+		"/etc/corporate",
+		"/home/victim/Documents",
+		"/var/www/secretapp",
+	}
+	dirs = []string{
+		"config",
+		"database",
+		"uploads",
+		"admin",
+		"api",
+		"logs",
+		"Personal",
+		"Work",
+		"Finance",
+		"Private",
+		".ssh",
+		".gnupg",
+		"ssl",
+		"backup",
+		"keys",
+		"secrets",
+		"HR",
+		"Legal",
+		"R&D",
+		"Executive",
+		"IT",
+	}
+	files = []string{
+		"config.php",
+		"database.sql",
+		"users.db",
+		"admin_panel.php",
+		"api_keys.json",
+		"access.log",
+		"passwords.txt",
+		"backup.tar.gz",
+		"tax_returns.pdf",
+		"bank_statements.xlsx",
+		"private_key.pem",
+		"id_rsa",
+		"budget.xlsx",
+		"diary.txt",
+		"contracts.pdf",
+		"master.key",
+		"database.conf",
+		"ssl_cert.pem",
+		"api_secrets.env",
+		"admin_creds.txt",
+		"backup_keys.gpg",
+		"server.conf",
+		"employee_records.csv",
+		"salary_data.xlsx",
+		"legal_docs.pdf",
+		"trade_secrets.doc",
+		"exec_emails.mbox",
+		"vpn_configs.ovpn",
+		"source_code.zip",
+		"patents.pdf",
+	}
+	summaries = []string{
+		"\033[32m[+] Directory scan complete\033[0m",
+		"\033[33m[*] Sensitive files detected\033[0m",
+		"\033[31m[!] Confidential data found\033[0m",
+		"\033[36m[*] File enumeration finished\033[0m",
+	}
+)
