@@ -49,6 +49,19 @@
 - 🖥️ CRT scan lines effect (simulates old phosphor monitor with alternating dim lines)
 - 💀 ASCII art splash screens (skulls, hacker logos, cyber eyes, trojans, and more)
 
+## 🔊 Audio Effects
+
+- 🔔 **Dramatic Sound Effects**: Custom beep sounds play at critical moments
+  - Warnings and alerts (unauthorized access, errors, dangerous situations)
+  - Success moments (access granted, passwords cracked, systems breached)
+  - Critical revelations (hidden messages found, AI warnings)
+  - Task completions (progress bars, spinners finishing)
+- 🎚️ **Smart Audio System**: Automatically detects available audio players
+  - Supports: `paplay`, `aplay`, `ffplay`, `mpv`, `mplayer`, `cvlc`, `afplay`
+  - Cross-platform (Linux, macOS)
+  - Falls back to terminal bell if no audio system available
+- ⚙️ **Configurable**: Adjust beep frequency via `chanceBeep` constant (default: 15%)
+
 ## 🚀 Installation
 
 ### 📋 Prerequisites
@@ -59,6 +72,7 @@
 
 **Optional:**
 - 🔤 [Nerd Fonts](https://www.nerdfonts.com/) - For proper display of icons in the terminal prompt (recommended: JetBrainsMono Nerd Font, FiraCode Nerd Font, or Hack Nerd Font)
+- 🔊 Audio player - For sound effects (automatically detected: `paplay`, `aplay`, `ffplay`, `mpv`, `mplayer`, `cvlc`, or `afplay`)
 
 ### 🔨 Build
 
@@ -70,6 +84,16 @@ Or to build and run in one step:
 ```bash
 go run .
 ```
+
+### 🔊 Testing Audio
+
+To verify audio effects are working:
+
+```bash
+./test_audio.sh
+```
+
+This will check for available audio players and test playback of `assets/beep.wav`.
 
 ## 🎮 Usage
 
@@ -152,11 +176,26 @@ For presentations or background displays:
 
 ## ⚡ Configuration
 
-The program uses:
-- ⌨️ **Command typing speed**: 50ms per character
+The program uses default settings that can be adjusted in `config.go`:
+
+**Timing:**
+- ⌨️ **Command typing speed**: 50ms per character (variable by key position)
 - 📝 **Output typing speed**: 30ms per character
 - 🤔 **Thinking pause**: 200-2000ms random delay
 - 📏 **Terminal width**: Auto-detected (defaults to 80 columns)
+
+**Visual Effects Probability:**
+- 📺 **Screen glitch**: 10% chance
+- 🖥️ **CRT scan lines**: 1% chance
+- 💀 **ASCII splash**: 10% chance
+- 🌐 **Network topology**: 10% chance
+- 🖼️ **Split screen**: 10% chance
+- 📁 **File tree**: 10% chance
+- ⌨️ **Typos**: 5% chance
+
+**Audio:**
+- 🔔 **Dramatic beeps**: 15% chance on critical moments
+- 📂 Custom sound: `assets/beep.wav` (automatically plays if audio player available)
 
 ## 🎬 Movie References
 
