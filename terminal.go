@@ -255,7 +255,7 @@ func (h *HackerTerminal) showDashboard() {
 
 	// Generate random stats
 	cpuUsage := 85.0 + rand.Float64()*14.0 // 85-99%
-	memUsage := 1.5 + rand.Float64()*2.0   // 1.5-3.5 GB
+	memUsage := 2.0 + rand.Float64()*30.0  // 2-32 GB
 	uptime := 1 + rand.Intn(99)            // 1-99 hours
 	threats := rand.Intn(150)              // 0-149
 	connActive := 100 + rand.Intn(999)     // 100-1098
@@ -263,22 +263,22 @@ func (h *HackerTerminal) showDashboard() {
 
 	// Left side stats
 	leftStats := []string{
-		"\033[32m●\033[0m SYS:ONLINE",
-		"\033[33m▲\033[0m NET:BREACH",
-		"\033[31m◆\033[0m FW:BYPASSED",
-		"\033[36m◉\033[0m PORT:4444",
+		"\033[32m●\033[0m SYS: ONLINE",
+		"\033[33m▲\033[0m NET: BREACH",
+		"\033[31m◆\033[0m FW: BYPASSED",
+		"\033[36m◉\033[0m PORT: 4444",
 	}
 
 	// Right side stats
 	rightStats := []string{
-		fmt.Sprintf("CPU:\033[33m%.1f%%\033[0m", cpuUsage),
-		fmt.Sprintf("MEM:\033[36m%.1fGB\033[0m", memUsage),
-		fmt.Sprintf("UP:\033[32m%dh\033[0m", uptime),
-		fmt.Sprintf("THR:\033[31m%d\033[0m", threats),
+		fmt.Sprintf("CPU: \033[33m%.1f %%\033[0m", cpuUsage),
+		fmt.Sprintf("MEM: \033[36m%.1f GB\033[0m", memUsage),
+		fmt.Sprintf("UP: \033[32m%d h\033[0m", uptime),
+		fmt.Sprintf("THR: \033[31m%d\033[0m", threats),
 	}
 
 	// Bottom stats bar
-	bottomStats := fmt.Sprintf("PROTO:\033[36mTCP/IP\033[0m | CONN:\033[36m%d\033[0m | PKT/s:\033[36m%d\033[0m | TARGET:\033[36m%s\033[0m", connActive, pktsPerSec, h.target)
+	bottomStats := fmt.Sprintf("PROTO: \033[36mTCP/IP\033[0m | CONN: \033[36m%d\033[0m | PKT/s: \033[36m%d\033[0m | TARGET: \033[36m%s\033[0m", connActive, pktsPerSec, h.target)
 
 	// Display top stats (left and right aligned)
 	for i := range leftStats {
