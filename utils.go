@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"os"
 	"os/exec"
@@ -11,6 +12,9 @@ import (
 	"time"
 	"unicode/utf8"
 )
+
+//go:embed assets/beep.wav
+var embeddedBeepWav []byte
 
 var ansi = regexp.MustCompile(`\x1b\[[0-9;]*m`)
 
@@ -100,26 +104,42 @@ func playAudioFile(audioPath string) error {
 }
 
 func beep() {
+	// Try external file first (for development/customization)
 	execPath, err := os.Executable()
-	if err != nil {
-		// Fallback to terminal bell if we can't find executable path
-		fmt.Print("\a")
-		return
-	}
+	if err == nil {
+		execDir := filepath.Dir(execPath)
+		audioPath := filepath.Join(execDir, "assets", "beep.wav")
 
-	execDir := filepath.Dir(execPath)
-	audioPath := filepath.Join(execDir, "assets", "beep.wav")
+		if _, err := os.Stat(audioPath); err == nil {
+			playAudioFile(audioPath)
+			return
+		}
 
-	if _, err := os.Stat(audioPath); os.IsNotExist(err) {
+		// Try relative path
 		audioPath = "assets/beep.wav"
-		if _, err := os.Stat(audioPath); os.IsNotExist(err) {
-			// Fall back to terminal bell
-			fmt.Print("\a")
+		if _, err := os.Stat(audioPath); err == nil {
+			playAudioFile(audioPath)
 			return
 		}
 	}
 
-	playAudioFile(audioPath)
+	// Use embedded audio file
+	tmpFile, err := os.CreateTemp("", "hackerminal-beep-*.wav")
+	if err != nil {
+		// Fallback to terminal bell
+		fmt.Print("\a")
+		return
+	}
+	defer os.Remove(tmpFile.Name())
+	defer tmpFile.Close()
+
+	if _, err := tmpFile.Write(embeddedBeepWav); err != nil {
+		fmt.Print("\a")
+		return
+	}
+
+	tmpFile.Close()
+	playAudioFile(tmpFile.Name())
 }
 
 func beepTimes(count int) {

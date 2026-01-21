@@ -1,0 +1,126 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - os: linux
+            runner: ubuntu-latest
+            goos: linux
+            goarch: amd64
+          - os: linux-arm64
+            runner: ubuntu-latest
+            goos: linux
+            goarch: arm64
+          - os: macos-intel
+            runner: macos-latest
+            goos: darwin
+            goarch: amd64
+          - os: macos-arm64
+            runner: macos-latest
+            goos: darwin
+            goarch: arm64
+          - os: windows
+            runner: windows-latest
+            goos: windows
+            goarch: amd64
+          - os: windows-arm64
+            runner: windows-latest
+            goos: windows
+            goarch: arm64
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Get version
+        id: version
+        shell: bash
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          else
+            echo "version=dev-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build binary
+        shell: bash
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+        run: |
+          if [ "$GOOS" = "windows" ]; then
+            go build -ldflags="-s -w" -o hackerminal.exe .
+          else
+            go build -ldflags="-s -w" -o hackerminal .
+          fi
+
+      - name: Create archive (Unix)
+        if: matrix.goos != 'windows'
+        shell: bash
+        run: |
+          mkdir -p hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}
+          cp hackerminal hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}/
+          cp -r assets hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}/
+          cp README.md hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}/
+          tar -czf hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}.tar.gz \
+            hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}
+
+      - name: Create archive (Windows)
+        if: matrix.goos == 'windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path "hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}"
+          Copy-Item "hackerminal.exe" -Destination "hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}/"
+          Copy-Item -Path "assets" -Destination "hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}/" -Recurse
+          Copy-Item "README.md" -Destination "hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}/"
+          Compress-Archive -Path "hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}" `
+            -DestinationPath "hackerminal-${{ steps.version.outputs.version }}-${{ matrix.goos }}-${{ matrix.goarch }}.zip"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hackerminal-${{ matrix.os }}-${{ matrix.goarch }}
+          path: |
+            *.tar.gz
+            *.zip
+          retention-days: 7
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/**/*
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
