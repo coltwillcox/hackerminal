@@ -71,22 +71,22 @@ Download the latest release for your platform:
 
 **Linux:**
 ```bash
-wget https://github.com/yourusername/hackerminal/releases/latest/download/hackerminal-1.0.1-linux-amd64.tar.gz
-tar -xzf hackerminal-1.0.1-linux-amd64.tar.gz
-cd hackerminal-1.0.1-linux-amd64
+wget https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.0.3-linux-amd64.tar.gz
+tar -xzf hackerminal-1.0.3-linux-amd64.tar.gz
+cd hackerminal-1.0.3-linux-amd64
 ./hackerminal
 ```
 
 **macOS:**
 ```bash
-curl -LO https://github.com/yourusername/hackerminal/releases/latest/download/hackerminal-1.0.1-darwin-arm64.tar.gz
-tar -xzf hackerminal-1.0.1-darwin-arm64.tar.gz
-cd hackerminal-1.0.1-darwin-arm64
+curl -LO https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.0.3-darwin-arm64.tar.gz
+tar -xzf hackerminal-1.0.3-darwin-arm64.tar.gz
+cd hackerminal-1.0.3-darwin-arm64
 ./hackerminal
 ```
 
 **Windows:**
-Download the `.zip` file from [releases](https://github.com/yourusername/hackerminal/releases), extract it, and run `hackerminal.exe`.
+Download the `.zip` file from [releases](https://github.com/coltwillcox/hackerminal/releases), extract it, and run `hackerminal.exe`.
 
 ### 📋 Prerequisites
 
@@ -111,7 +111,7 @@ go build -o hackerminal .
 ```bash
 make build-all
 # or
-./build.sh 1.0.1
+./build.sh 1.0.3
 ```
 
 This creates optimized binaries for:

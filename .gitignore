@@ -1,2 +1,30 @@
+# Binaries
 hackerminal
+hackerminal.exe
+*.exe
+*.out
+
+# Build directory
+build/
+dist/
+
+# Go workspace file
+go.work
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.log
+*.tmp
+
+# Misc files
 todo.txt
