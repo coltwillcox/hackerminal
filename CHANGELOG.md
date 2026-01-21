@@ -2,10 +2,10 @@
 
 All notable changes to Hackerminal will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.1/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2026-01-21
+## [1.0.1] - 2026-01-21
 
 ### Added
 - 🎬 **60+ Hollywood Hacking Sequences** - Parodies of movie/TV hacking scenes
@@ -124,4 +124,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[1.0.0]: https://github.com/yourusername/hackerminal/releases/tag/v1.0.0
+[1.0.1]: https://github.com/yourusername/hackerminal/releases/tag/v1.0.1

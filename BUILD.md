@@ -63,8 +63,8 @@ make uninstall
 The `build.sh` script creates optimized binaries for all platforms:
 
 ```bash
-# Build version 1.0.0 for all platforms
-./build.sh 1.0.0
+# Build version 1.0.1 for all platforms
+./build.sh 1.0.1
 
 # Build with custom version
 ./build.sh 2.0.0-beta
@@ -73,12 +73,12 @@ The `build.sh` script creates optimized binaries for all platforms:
 Output structure:
 ```
 build/
-├── hackerminal-1.0.0-linux-amd64.tar.gz
-├── hackerminal-1.0.0-linux-arm64.tar.gz
-├── hackerminal-1.0.0-darwin-amd64.tar.gz
-├── hackerminal-1.0.0-darwin-arm64.tar.gz
-├── hackerminal-1.0.0-windows-amd64.zip
-└── hackerminal-1.0.0-windows-arm64.zip
+├── hackerminal-1.0.1-linux-amd64.tar.gz
+├── hackerminal-1.0.1-linux-arm64.tar.gz
+├── hackerminal-1.0.1-darwin-amd64.tar.gz
+├── hackerminal-1.0.1-darwin-arm64.tar.gz
+├── hackerminal-1.0.1-windows-amd64.zip
+└── hackerminal-1.0.1-windows-arm64.zip
 ```
 
 ### 3. Manual Build
@@ -160,7 +160,7 @@ GOOS=windows GOARCH=arm64   // Windows ARM 64-bit
 ### Archive Contents
 Each platform archive contains:
 ```
-hackerminal-1.0.0-{os}-{arch}/
+hackerminal-1.0.1-{os}-{arch}/
 ├── hackerminal (or hackerminal.exe on Windows)  [self-contained with embedded audio]
 ├── assets/                                       [optional for customization]
 │   └── beep.wav
@@ -190,7 +190,7 @@ All binaries include the embedded 72KB audio file.
 The repository includes a GitHub Actions workflow (`.github/workflows/release.yml`) that automatically:
 
 1. **Triggers on**:
-   - Git tags matching `v*` (e.g., `v1.0.0`)
+   - Git tags matching `v*` (e.g., `v1.0.1`)
    - Manual workflow dispatch
 
 2. **Builds**:
@@ -206,10 +206,10 @@ The repository includes a GitHub Actions workflow (`.github/workflows/release.ym
 
 ```bash
 # Tag the release
-git tag -a v1.0.0 -m "Release version 1.0.0"
+git tag -a v1.0.1 -m "Release version 1.0.1"
 
 # Push the tag to trigger CI/CD
-git push origin v1.0.0
+git push origin v1.0.1
 
 # GitHub Actions will automatically:
 # - Build all platform binaries

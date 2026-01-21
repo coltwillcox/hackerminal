@@ -1,6 +1,6 @@
 .PHONY: all build clean test audio-test run install help
 
-VERSION ?= 1.0.0
+VERSION ?= 1.0.1
 BINARY_NAME = hackerminal
 BUILD_DIR = build
 
