@@ -62,8 +62,8 @@ make uninstall
 The `build.sh` script creates optimized binaries for all platforms:
 
 ```bash
-# Build version 1.0.3 for all platforms
-./build.sh 1.0.3
+# Build version 1.1.0 for all platforms
+./build.sh 1.1.0
 
 # Build with custom version
 ./build.sh 2.0.0-beta
@@ -72,12 +72,12 @@ The `build.sh` script creates optimized binaries for all platforms:
 Output structure:
 ```
 build/
-├── hackerminal-1.0.3-linux-amd64.tar.gz
-├── hackerminal-1.0.3-linux-arm64.tar.gz
-├── hackerminal-1.0.3-darwin-amd64.tar.gz
-├── hackerminal-1.0.3-darwin-arm64.tar.gz
-├── hackerminal-1.0.3-windows-amd64.zip
-└── hackerminal-1.0.3-windows-arm64.zip
+├── hackerminal-1.1.0-linux-amd64.tar.gz
+├── hackerminal-1.1.0-linux-arm64.tar.gz
+├── hackerminal-1.1.0-darwin-amd64.tar.gz
+├── hackerminal-1.1.0-darwin-arm64.tar.gz
+├── hackerminal-1.1.0-windows-amd64.zip
+└── hackerminal-1.1.0-windows-arm64.zip
 ```
 
 ### 3. Manual Build
@@ -151,7 +151,7 @@ GOOS=windows GOARCH=arm64   // Windows ARM 64-bit
 ### Archive Contents
 Each platform archive contains:
 ```
-hackerminal-1.0.3-{os}-{arch}/
+hackerminal-1.1.0-{os}-{arch}/
 ├── hackerminal (or hackerminal.exe on Windows)  [self-contained]
 └── README.md
 ```
@@ -175,7 +175,7 @@ Windows ARM64               2.1 MB         0.9 MB
 The repository includes a GitHub Actions workflow (`.github/workflows/release.yml`) that automatically:
 
 1. **Triggers on**:
-   - Git tags matching `v*` (e.g., `v1.0.3`)
+   - Git tags matching `v*` (e.g., `v1.1.0`)
    - Manual workflow dispatch
 
 2. **Builds**:
@@ -191,10 +191,10 @@ The repository includes a GitHub Actions workflow (`.github/workflows/release.ym
 
 ```bash
 # Tag the release
-git tag -a v1.0.3 -m "Release version 1.0.3"
+git tag -a v1.1.0 -m "Release version 1.1.0"
 
 # Push the tag to trigger CI/CD
-git push origin v1.0.3
+git push origin v1.1.0
 
 # GitHub Actions will automatically:
 # - Build all platform binaries

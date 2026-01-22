@@ -5,6 +5,14 @@ All notable changes to Hackerminal will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.3/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-22
+
+### Changed
+- Updated binary size from ~2.3 MB to ~2.2 MB
+- Improved build documentation with accurate size information
+
+---
+
 ## [1.0.3] - 2026-01-21
 
 ### Added
@@ -105,4 +113,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[1.1.0]: https://github.com/coltwillcox/hackerminal/releases/tag/v1.1.0
 [1.0.3]: https://github.com/coltwillcox/hackerminal/releases/tag/v1.0.3
