@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.1] - 2026-01-22
 
+### Added
+- **Achievements/Statistics System** - Gamified tracking of hacking sessions
+  - Persistent stats stored in `~/.config/hackerminal/stats.json`
+  - Session tracking: commands typed, sequences triggered, uptime, and more
+  - All-time statistics: total sessions, total commands, longest session, current streak
+  - 15 unlockable achievements across Rookie, Intermediate, Advanced, and Rare tiers
+  - Achievement notifications with visual celebration
+  - Stats displayed on exit (Ctrl+C)
+  - Configurable stats directory for future config file support
+
 ### Changed
 - Removed assets directory from build archives (binary is now fully self-contained)
 - Updated build scripts to exclude assets from distribution packages
+- Terminal stats now tracked per command typed
+- Effects tracking for glitches, CRT scans, Matrix rain, ASCII splashes, and more
 
 ---
 

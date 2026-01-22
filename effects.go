@@ -65,6 +65,11 @@ func (h *HackerTerminal) fakeIPScan() {
 }
 
 func (h *HackerTerminal) matrixRain() {
+	// Track effect
+	if h.stats != nil {
+		h.stats.TrackEffect("matrix_rain")
+	}
+
 	chars := "01アイウエオカキクケコサシスセソタチツテト"
 	lines := 3
 	width := min(getTerminalWidth(), 120) // Cap at reasonable size
@@ -513,26 +518,44 @@ func (h *HackerTerminal) fileTree() {
 	time.Sleep(1500 * time.Millisecond)
 }
 
-func (h *HackerTerminal) randomEffect() {
+func (h *HackerTerminal) RandomEffect() {
 	// Random chance for visual effects
 	effectRoll := rand.Float32()
 	if effectRoll < chanceGlitch {
 		time.Sleep(200 * time.Millisecond)
+		if h.stats != nil {
+			h.stats.TrackEffect("glitch")
+		}
 		h.screenGlitch()
 	} else if effectRoll < chanceGlitch+chanceCrtScan {
 		time.Sleep(200 * time.Millisecond)
+		if h.stats != nil {
+			h.stats.TrackEffect("crt_scan")
+		}
 		h.crtScanLines()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash {
 		time.Sleep(200 * time.Millisecond)
+		if h.stats != nil {
+			h.stats.TrackEffect("splash")
+		}
 		h.asciiSplash()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology {
 		time.Sleep(200 * time.Millisecond)
+		if h.stats != nil {
+			h.stats.TrackEffect("topology")
+		}
 		h.networkTopology()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology+chanceSplitScreen {
 		time.Sleep(200 * time.Millisecond)
+		if h.stats != nil {
+			h.stats.TrackEffect("split_screen")
+		}
 		h.splitScreen()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology+chanceSplitScreen+chanceFileTree {
 		time.Sleep(200 * time.Millisecond)
+		if h.stats != nil {
+			h.stats.TrackEffect("file_tree")
+		}
 		h.fileTree()
 	}
 }

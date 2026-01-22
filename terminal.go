@@ -30,10 +30,16 @@ var (
 	}
 )
 
+type Sequence struct {
+	name string
+	fn   func()
+}
+
 type HackerTerminal struct {
 	username  string
 	target    string
-	sequences []func()
+	sequences []Sequence
+	stats     *Stats
 }
 
 func NewHackerTerminal() *HackerTerminal {
@@ -41,7 +47,7 @@ func NewHackerTerminal() *HackerTerminal {
 		username: usernames[rand.Intn(len(usernames))],
 		target:   targets[rand.Intn(len(targets))],
 	}
-	hackerTerminal.createSequences()
+	hackerTerminal.CreateSequences()
 
 	return hackerTerminal
 }
@@ -164,15 +170,20 @@ func (h *HackerTerminal) typeCommand(text string, delayMs int) {
 		time.Sleep(time.Duration(charDelay) * time.Millisecond)
 	}
 	printSeparator()
+
+	// Track command
+	if h.stats != nil {
+		h.stats.TrackCommand()
+	}
 }
 
-func (h *HackerTerminal) randomPause() {
+func (h *HackerTerminal) RandomPause() {
 	// Random delay between 200ms and 2000ms to simulate thinking
 	delay := 200 + rand.Intn(1800)
 	time.Sleep(time.Duration(delay) * time.Millisecond)
 }
 
-func (h *HackerTerminal) showPrompt() {
+func (h *HackerTerminal) ShowPrompt() {
 	// Classic CRT phosphor green/amber monochrome terminal style
 
 	// Left side segments
@@ -328,4 +339,27 @@ func (h *HackerTerminal) drawCentered(image, color string, hold int64, clear boo
 			fmt.Print("\033[1A\033[2K")
 		}
 	}
+}
+
+func (h *HackerTerminal) PrintNotification(notification, color string, hold int64) {
+	h.drawCentered(notification, color, hold, false)
+}
+
+func (h *HackerTerminal) RunSequence() {
+	h.ShowPrompt()
+	h.RandomPause()
+
+	// Run a random sequence
+	sequence := h.sequences[rand.Intn(len(h.sequences))]
+	sequence.fn()
+
+	// Track sequence
+	if h.stats != nil {
+		h.stats.TrackSequence(sequence.name)
+	}
+
+	h.RandomEffect()
+
+	printSeparator()
+	time.Sleep(1500 * time.Millisecond)
 }
