@@ -30,11 +30,6 @@ var (
 	}
 )
 
-type Sequence struct {
-	name string
-	fn   func()
-}
-
 type HackerTerminal struct {
 	username  string
 	target    string
@@ -52,7 +47,7 @@ func NewHackerTerminal() *HackerTerminal {
 	return hackerTerminal
 }
 
-func (h *HackerTerminal) typeText(text string, delayMs int) {
+func (h *HackerTerminal) TypeText(text string, delayMs int) {
 	for _, char := range text {
 		fmt.Print(string(char))
 		time.Sleep(time.Duration(delayMs) * time.Millisecond)
@@ -60,7 +55,7 @@ func (h *HackerTerminal) typeText(text string, delayMs int) {
 	printSeparator()
 }
 
-func (h *HackerTerminal) typeCommand(text string, delayMs int) {
+func (h *HackerTerminal) TypeCommand(text string, delayMs int) {
 	// Adjacent keys on QWERTY keyboard for realistic typos
 	adjacentKeys := map[rune][]rune{
 		'a': {'s', 'q', 'z', 'w'},
@@ -253,12 +248,12 @@ func (h *HackerTerminal) ShowPrompt() {
 	fmt.Print("\033[38;5;46m❯\033[0m ")
 }
 
-func (h *HackerTerminal) showBanner() {
+func (h *HackerTerminal) ShowBanner() {
 	// Display dashboard stats before banner
 	h.showDashboard()
 
 	// Display main banner
-	h.drawCentered(banner, "\033[38;5;46m", 1000, false)
+	h.DrawCentered(banner, "\033[38;5;46m", 1000, false)
 }
 
 func (h *HackerTerminal) showDashboard() {
@@ -306,7 +301,7 @@ func (h *HackerTerminal) showDashboard() {
 	fmt.Println(bottomStats)
 }
 
-func (h *HackerTerminal) drawCentered(image, color string, hold int64, clear bool) {
+func (h *HackerTerminal) DrawCentered(image, color string, hold int64, clear bool) {
 	// Get terminal width for centering
 	termWidth := getTerminalWidth()
 
@@ -342,24 +337,5 @@ func (h *HackerTerminal) drawCentered(image, color string, hold int64, clear boo
 }
 
 func (h *HackerTerminal) PrintNotification(notification, color string, hold int64) {
-	h.drawCentered(notification, color, hold, false)
-}
-
-func (h *HackerTerminal) RunSequence() {
-	h.ShowPrompt()
-	h.RandomPause()
-
-	// Run a random sequence
-	sequence := h.sequences[rand.Intn(len(h.sequences))]
-	sequence.fn()
-
-	// Track sequence
-	if h.stats != nil {
-		h.stats.TrackSequence(sequence.name)
-	}
-
-	h.RandomEffect()
-
-	printSeparator()
-	time.Sleep(1500 * time.Millisecond)
+	h.DrawCentered(notification, color, hold, false)
 }

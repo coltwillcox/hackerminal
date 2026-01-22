@@ -24,7 +24,7 @@ type Stats struct {
 	SessionStartTime   time.Time                   `json:"-"`
 	CurrentCommands    int                         `json:"-"`
 	CurrentSequences   map[string]int              `json:"-"`
-	filePath           string                      `json:"-"`
+	FilePath           string                      `json:"-"`
 	OnNotification     func(string, string, int64) `json:"-"` // Callback for achievement notifications
 }
 
@@ -138,7 +138,7 @@ func LoadStats() (*Stats, error) {
 		Achievements:       []UnlockedAchievement{},
 		SessionStartTime:   time.Now(),
 		CurrentSequences:   make(map[string]int),
-		filePath:           filePath,
+		FilePath:           filePath,
 	}
 
 	// Try to load existing stats
@@ -157,7 +157,7 @@ func LoadStats() (*Stats, error) {
 
 	stats.SessionStartTime = time.Now()
 	stats.CurrentSequences = make(map[string]int)
-	stats.filePath = filePath
+	stats.FilePath = filePath
 
 	return stats, nil
 }
@@ -192,7 +192,7 @@ func (s *Stats) Save() error {
 		return err
 	}
 
-	return os.WriteFile(s.filePath, data, 0644)
+	return os.WriteFile(s.FilePath, data, 0644)
 }
 
 // TrackCommand increments command counter

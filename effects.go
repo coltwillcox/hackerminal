@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (h *HackerTerminal) progressBar(task string, duration time.Duration) {
+func (h *HackerTerminal) ProgressBar(task string, duration time.Duration) {
 	fmt.Printf("%s [", task)
 	steps := 30
 	stepDuration := duration / time.Duration(steps)
@@ -19,7 +19,7 @@ func (h *HackerTerminal) progressBar(task string, duration time.Duration) {
 	fmt.Println("] \033[32mDONE\033[0m")
 }
 
-func (h *HackerTerminal) spinner(task string, duration time.Duration) {
+func (h *HackerTerminal) Spinner(task string, duration time.Duration) {
 	spinChars := []string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
 	// Alternative spinners for variety
 	altSpinners := [][]string{
@@ -45,7 +45,7 @@ func (h *HackerTerminal) spinner(task string, duration time.Duration) {
 	fmt.Printf("\r\033[32m✓\033[0m %s \033[32mDONE\033[0m\n", task)
 }
 
-func (h *HackerTerminal) fakeIPScan() {
+func (h *HackerTerminal) FakeIPScan() {
 	ips := []string{
 		"192.168.1.1", "10.0.0.1", "172.16.0.1", "8.8.8.8", "1.1.1.1", "127.0.0.1", "192.168.0.255",
 	}
@@ -64,7 +64,7 @@ func (h *HackerTerminal) fakeIPScan() {
 	}
 }
 
-func (h *HackerTerminal) matrixRain() {
+func (h *HackerTerminal) MatrixRain() {
 	// Track effect
 	if h.stats != nil {
 		h.stats.TrackEffect("matrix_rain")
@@ -279,7 +279,7 @@ func (h *HackerTerminal) asciiSplash() {
 
 	// Select random artwork
 	selected := artworks[rand.Intn(len(artworks))]
-	h.drawCentered(selected.art, selected.color, 1500, true)
+	h.DrawCentered(selected.art, selected.color, 1500, true)
 }
 
 func (h *HackerTerminal) networkTopology() {
@@ -330,8 +330,8 @@ func (h *HackerTerminal) networkTopology() {
 
 	// Select random topology
 	selected := topologies[rand.Intn(len(topologies))]
-	h.drawCentered(selected.title, selected.colorTitle, 0, false)
-	h.drawCentered(selected.diagram, selected.colorDiagram, 1500, false)
+	h.DrawCentered(selected.title, selected.colorTitle, 0, false)
+	h.DrawCentered(selected.diagram, selected.colorDiagram, 1500, false)
 }
 
 func (h *HackerTerminal) splitScreen() {
@@ -447,7 +447,7 @@ func (h *HackerTerminal) fileTree() {
 	selectedFiles := files[:rand.Intn(len(files)-2)+2]
 
 	// Display title
-	h.drawCentered(title, "\033[33m", 0, false)
+	h.DrawCentered(title, "\033[33m", 0, false)
 	printSeparator()
 
 	// Display root with tree icon
