@@ -268,6 +268,7 @@ func (s *Stats) formatAchievement(achievement Achievement) (result string) {
 	return result
 }
 
+// PrintStats displays current session and all-time statistics
 func (s *Stats) PrintStats() {
 	// Format notification
 	notification := s.formatCurrentStats()
@@ -365,7 +366,7 @@ func truncate(s string, max int) string {
 	return s[:max-3] + "..."
 }
 
-// StartNewSession initializes a new session
+// StartNewSession initializes a new session and tracks session-related achievements
 func (s *Stats) StartNewSession() {
 	s.TotalSessions++
 	s.SessionStartTime = time.Now()

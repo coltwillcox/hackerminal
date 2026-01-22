@@ -8,11 +8,13 @@ import (
 	"time"
 )
 
+// Sequence represents a named hacking sequence with its execution function
 type Sequence struct {
 	name string
 	fn   func()
 }
 
+// CreateSequences initializes all available hacking sequence definitions
 func (h *HackerTerminal) CreateSequences() {
 	h.sequences = []Sequence{
 		{name: "ssh_root", fn: func() {
@@ -726,6 +728,7 @@ func (h *HackerTerminal) CreateSequences() {
 	}
 }
 
+// RunSequence executes a random hacking sequence with visual effects
 func (h *HackerTerminal) RunSequence() {
 	h.ShowPrompt()
 	h.RandomPause()

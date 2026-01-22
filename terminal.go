@@ -30,6 +30,7 @@ var (
 	}
 )
 
+// HackerTerminal manages the terminal display and sequence execution
 type HackerTerminal struct {
 	username  string
 	target    string
@@ -37,6 +38,7 @@ type HackerTerminal struct {
 	stats     *Stats
 }
 
+// NewHackerTerminal creates a new terminal with random username and target
 func NewHackerTerminal() *HackerTerminal {
 	hackerTerminal := &HackerTerminal{
 		username: usernames[rand.Intn(len(usernames))],
@@ -47,6 +49,7 @@ func NewHackerTerminal() *HackerTerminal {
 	return hackerTerminal
 }
 
+// TypeText prints text with a typing effect
 func (h *HackerTerminal) TypeText(text string, delayMs int) {
 	for _, char := range text {
 		fmt.Print(string(char))
@@ -55,6 +58,7 @@ func (h *HackerTerminal) TypeText(text string, delayMs int) {
 	printSeparator()
 }
 
+// TypeCommand prints a command with typing effect, realistic typos, and command tracking
 func (h *HackerTerminal) TypeCommand(text string, delayMs int) {
 	// Adjacent keys on QWERTY keyboard for realistic typos
 	adjacentKeys := map[rune][]rune{
@@ -178,6 +182,7 @@ func (h *HackerTerminal) RandomPause() {
 	time.Sleep(time.Duration(delay) * time.Millisecond)
 }
 
+// ShowPrompt displays the terminal prompt with user, host, directory, git branch, and timestamp
 func (h *HackerTerminal) ShowPrompt() {
 	// Classic CRT phosphor green/amber monochrome terminal style
 
@@ -248,6 +253,7 @@ func (h *HackerTerminal) ShowPrompt() {
 	fmt.Print("\033[38;5;46m❯\033[0m ")
 }
 
+// ShowBanner displays the application banner with dashboard statistics
 func (h *HackerTerminal) ShowBanner() {
 	// Display dashboard stats before banner
 	h.showDashboard()
@@ -301,6 +307,7 @@ func (h *HackerTerminal) showDashboard() {
 	fmt.Println(bottomStats)
 }
 
+// DrawCentered displays text centered on screen with optional hold time and clearing
 func (h *HackerTerminal) DrawCentered(image, color string, hold int64, clear bool) {
 	// Get terminal width for centering
 	termWidth := getTerminalWidth()
@@ -336,6 +343,7 @@ func (h *HackerTerminal) DrawCentered(image, color string, hold int64, clear boo
 	}
 }
 
+// PrintNotification displays a notification message using centered formatting
 func (h *HackerTerminal) PrintNotification(notification, color string, hold int64) {
 	h.DrawCentered(notification, color, hold, false)
 }

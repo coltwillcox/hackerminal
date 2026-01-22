@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// ProgressBar displays an animated progress bar for the given task and duration
 func (h *HackerTerminal) ProgressBar(task string, duration time.Duration) {
 	fmt.Printf("%s [", task)
 	steps := 30
@@ -19,6 +20,7 @@ func (h *HackerTerminal) ProgressBar(task string, duration time.Duration) {
 	fmt.Println("] \033[32mDONE\033[0m")
 }
 
+// Spinner displays an animated spinner for the given task and duration
 func (h *HackerTerminal) Spinner(task string, duration time.Duration) {
 	spinChars := []string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
 	// Alternative spinners for variety
@@ -45,6 +47,7 @@ func (h *HackerTerminal) Spinner(task string, duration time.Duration) {
 	fmt.Printf("\r\033[32m✓\033[0m %s \033[32mDONE\033[0m\n", task)
 }
 
+// FakeIPScan simulates a network IP scan with random results
 func (h *HackerTerminal) FakeIPScan() {
 	ips := []string{
 		"192.168.1.1", "10.0.0.1", "172.16.0.1", "8.8.8.8", "1.1.1.1", "127.0.0.1", "192.168.0.255",
@@ -64,6 +67,7 @@ func (h *HackerTerminal) FakeIPScan() {
 	}
 }
 
+// MatrixRain displays a Matrix-style character rain effect
 func (h *HackerTerminal) MatrixRain() {
 	// Track effect
 	if h.stats != nil {
@@ -518,6 +522,7 @@ func (h *HackerTerminal) fileTree() {
 	time.Sleep(1500 * time.Millisecond)
 }
 
+// RandomEffect triggers a random visual effect based on configured probabilities
 func (h *HackerTerminal) RandomEffect() {
 	// Random chance for visual effects
 	effectRoll := rand.Float32()
