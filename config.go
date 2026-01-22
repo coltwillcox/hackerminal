@@ -9,7 +9,6 @@ const (
 	chanceSplitScreen = 0.1
 	chanceFileTree    = 0.1
 	chanceTypo        = 0.05
-	chanceBeep        = 0.15
 	typeSpeed0        = 10
 	typeSpeed1        = 10
 	typeSpeed2        = 30

@@ -329,15 +329,3 @@ func (h *HackerTerminal) drawCentered(image, color string, hold int64, clear boo
 		}
 	}
 }
-
-func (h *HackerTerminal) maybeBeep() {
-	if rand.Float64() < chanceBeep {
-		beep()
-	}
-}
-
-func (h *HackerTerminal) dramaticMoment() {
-	if rand.Float64() < chanceBeep {
-		dramaticBeep()
-	}
-}

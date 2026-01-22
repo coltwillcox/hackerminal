@@ -49,20 +49,6 @@
 - 🖥️ CRT scan lines effect (simulates old phosphor monitor with alternating dim lines)
 - 💀 ASCII art splash screens (skulls, hacker logos, cyber eyes, trojans, and more)
 
-## 🔊 Audio Effects
-
-- 🔔 **Dramatic Sound Effects**: Custom beep sounds play at critical moments
-  - Warnings and alerts (unauthorized access, errors, dangerous situations)
-  - Success moments (access granted, passwords cracked, systems breached)
-  - Critical revelations (hidden messages found, AI warnings)
-  - Task completions (progress bars, spinners finishing)
-- 🎚️ **Smart Audio System**: Automatically detects available audio players
-  - Supports: `paplay`, `aplay`, `ffplay`, `mpv`, `mplayer`, `cvlc`, `afplay`
-  - Cross-platform (Linux, macOS)
-  - Falls back to terminal bell if no audio system available
-  - **Fully self-contained**: Audio file embedded in binary (no external files needed)
-- ⚙️ **Configurable**: Adjust beep frequency via `chanceBeep` constant (default: 15%)
-
 ## 🚀 Installation
 
 ### 📦 Download Pre-built Binaries
@@ -96,7 +82,6 @@ Download the `.zip` file from [releases](https://github.com/coltwillcox/hackermi
 
 **Optional:**
 - 🔤 [Nerd Fonts](https://www.nerdfonts.com/) - For proper display of icons in the terminal prompt (recommended: JetBrainsMono Nerd Font, FiraCode Nerd Font, or Hack Nerd Font)
-- 🔊 Audio player - For sound effects (automatically detected: `paplay`, `aplay`, `ffplay`, `mpv`, `mplayer`, `cvlc`, or `afplay`)
 
 ### 🔨 Build
 
@@ -119,8 +104,6 @@ This creates optimized binaries for:
 - macOS (Intel, Apple Silicon)
 - Windows (amd64, arm64)
 
-**Note**: The audio file (`beep.wav`) is embedded directly in the binary using Go's `embed` package, making each executable fully self-contained. The `assets/` folder is still included in archives for reference, and external audio files take priority if present (allowing customization).
-
 **Build for Specific Platform:**
 ```bash
 make build-linux    # Linux only
@@ -131,21 +114,10 @@ make build-windows  # Windows only
 **Other Build Commands:**
 ```bash
 make run           # Build and run
-make audio-test    # Test audio system
 make clean         # Remove build artifacts
 make install       # Install to /usr/local/bin (Unix-like)
 make help          # Show all commands
 ```
-
-### 🔊 Testing Audio
-
-To verify audio effects are working:
-
-```bash
-./test_audio.sh
-```
-
-This will check for available audio players and test playback of `assets/beep.wav`.
 
 ## 🎮 Usage
 
@@ -244,10 +216,6 @@ The program uses default settings that can be adjusted in `config.go`:
 - 🖼️ **Split screen**: 10% chance
 - 📁 **File tree**: 10% chance
 - ⌨️ **Typos**: 5% chance
-
-**Audio:**
-- 🔔 **Dramatic beeps**: 15% chance on critical moments
-- 📂 Custom sound: `assets/beep.wav` (automatically plays if audio player available)
 
 ## 🎬 Movie References
 

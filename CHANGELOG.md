@@ -36,17 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Split screen displays (10% chance)
   - File tree visualizations (10% chance)
 
-- 🔊 **Audio Effects** - Dramatic sound system
-  - Custom beep sounds at critical moments (15% chance)
-  - Smart audio player detection (paplay, aplay, ffplay, mpv, mplayer, cvlc, afplay)
-  - Cross-platform support (Linux, macOS)
-  - Automatic fallback to terminal bell
-  - Single beep for warnings/alerts
-  - Triple beep for dramatic moments
-  - Custom `assets/beep.wav` audio file
-  - **Embedded audio**: Audio file embedded in binary using Go's `embed` package (fully self-contained)
-  - External audio files prioritized for customization
-
 - 🎭 **Hollywood Parody Elements**
   - Fake IP scanning
   - Password cracking with ridiculous results
@@ -68,12 +57,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 📦 **Distribution**
   - Optimized binaries with stripped symbols (~2.3MB per platform)
   - Archive packages (tar.gz for Unix, zip for Windows)
-  - **Self-contained executables**: Audio embedded, no external dependencies
-  - Assets folder included in releases for reference
   - README and documentation bundled
 
 - 🧪 **Testing Utilities**
-  - Audio test script (`test_audio.sh`)
   - Makefile test commands
 
 - ⚙️ **Configuration**
@@ -87,7 +73,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependencies**: Zero external dependencies (100% stdlib)
 - **Build Size**: ~1MB compressed per platform
 - **Platforms**: Linux (amd64/arm64), macOS (Intel/Apple Silicon), Windows (amd64/arm64)
-- **Audio Players Supported**: 7 different players with automatic detection
 - **Code Quality**: Clean separation of concerns, well-documented, Go idioms
 
 ### File Structure
@@ -98,12 +83,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ├── sequences.go      - 60+ parody sequences
 ├── effects.go        - Visual effects
 ├── assets.go         - ASCII art
-├── utils.go          - Utility functions including audio
-├── assets/
-│   └── beep.wav     - Custom beep sound
+├── utils.go          - Utility functions
 ├── build.sh          - Cross-platform build script
 ├── Makefile          - Build automation
-├── test_audio.sh     - Audio testing utility
 └── .github/
     └── workflows/
         └── release.yml - GitHub Actions CI/CD
@@ -119,7 +101,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Additional visual effects (3D ASCII, hex dumps, etc.)
 - Configuration file support
 - Command-line flags for customization
-- More audio effects
 - Achievements/statistics system
 
 ---

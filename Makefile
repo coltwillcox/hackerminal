@@ -1,4 +1,4 @@
-.PHONY: all build clean test audio-test run install help
+.PHONY: all build clean test run install help
 
 VERSION ?= 1.0.3
 BINARY_NAME = hackerminal
@@ -38,10 +38,6 @@ build-windows:
 run: build
 	@./$(BINARY_NAME)
 
-# Test audio system
-audio-test:
-	@./test_audio.sh
-
 # Clean build artifacts
 clean:
 	@echo "🧹 Cleaning build artifacts..."
@@ -80,7 +76,6 @@ help:
 	@echo "  make build-macos  - Build for macOS only"
 	@echo "  make build-windows- Build for Windows only"
 	@echo "  make run          - Build and run the application"
-	@echo "  make audio-test   - Test audio system"
 	@echo "  make clean        - Remove build artifacts"
 	@echo "  make install      - Install to /usr/local/bin (requires sudo)"
 	@echo "  make uninstall    - Remove from /usr/local/bin (requires sudo)"

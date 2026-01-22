@@ -16,7 +16,6 @@ func (h *HackerTerminal) progressBar(task string, duration time.Duration) {
 		fmt.Print("█")
 		time.Sleep(stepDuration)
 	}
-	h.maybeBeep()
 	fmt.Println("] \033[32mDONE\033[0m")
 }
 
@@ -43,7 +42,6 @@ func (h *HackerTerminal) spinner(task string, duration time.Duration) {
 		fmt.Printf("\r\033[36m%s\033[0m %s", char, task)
 		time.Sleep(100 * time.Millisecond)
 	}
-	h.maybeBeep()
 	fmt.Printf("\r\033[32m✓\033[0m %s \033[32mDONE\033[0m\n", task)
 }
 

@@ -50,9 +50,6 @@ make clean
 # Build and run
 make run
 
-# Test audio system
-make audio-test
-
 # Install to system (Unix-like, requires sudo)
 make install
 
@@ -135,16 +132,8 @@ GOOS=windows GOARCH=arm64 go build -ldflags="-s -w" -o hackerminal-windows-arm64
 - **Result**: Reduces binary size by ~30-40%
 
 Example sizes:
-- Without flags: ~3.5 MB
-- With flags: ~2.3 MB (includes embedded 72KB audio file)
-
-### Embedded Assets
-
-The `assets/beep.wav` file is embedded directly in the binary using Go's `embed` package:
-- **Self-contained**: No external files required to run
-- **Automatic fallback**: External files in `assets/` directory take priority if present
-- **Customizable**: Users can place custom audio files alongside the binary
-- **Zero dependencies**: Complete functionality in a single executable
+- Without flags: ~3.3 MB
+- With flags: ~2.2 MB
 
 ### Common GOOS/GOARCH Values
 
@@ -163,27 +152,21 @@ GOOS=windows GOARCH=arm64   // Windows ARM 64-bit
 Each platform archive contains:
 ```
 hackerminal-1.0.3-{os}-{arch}/
-├── hackerminal (or hackerminal.exe on Windows)  [self-contained with embedded audio]
-├── assets/                                       [optional for customization]
-│   └── beep.wav
+├── hackerminal (or hackerminal.exe on Windows)  [self-contained]
 └── README.md
 ```
-
-**Note**: The binary is fully functional without the `assets/` directory. The audio file is embedded in the executable. External assets are only needed if you want to customize the sound.
 
 ### Size Comparison
 ```
 Platform                    Binary Size    Archive Size
 ──────────────────────────────────────────────────────
-Linux AMD64                 2.3 MB         1.1 MB
-Linux ARM64                 2.2 MB         1.0 MB
-macOS Intel                 2.4 MB         1.1 MB
-macOS Apple Silicon         2.3 MB         1.0 MB
-Windows AMD64               2.4 MB         1.1 MB
-Windows ARM64               2.2 MB         1.0 MB
+Linux AMD64                 2.2 MB         1.0 MB
+Linux ARM64                 2.1 MB         0.9 MB
+macOS Intel                 2.3 MB         1.0 MB
+macOS Apple Silicon         2.2 MB         0.9 MB
+Windows AMD64               2.3 MB         1.0 MB
+Windows ARM64               2.1 MB         0.9 MB
 ```
-
-All binaries include the embedded 72KB audio file.
 
 ## CI/CD Pipeline
 
@@ -265,17 +248,6 @@ go version
    - Right-click → Properties → Unblock
    - Or sign with a code signing certificate
 
-### Audio Files Missing
-
-The build scripts automatically include the `assets/` directory. If audio doesn't work:
-
-```bash
-# Verify assets are included
-ls -la hackerminal-*/assets/
-
-# Should show: beep.wav
-```
-
 ## Clean Build
 
 To ensure a completely clean build:
@@ -294,7 +266,7 @@ make build
 ## Build Statistics
 
 - **Build Time**: ~10-15 seconds for all platforms (parallel)
-- **Binary Size**: ~2.5 MB uncompressed per platform
+- **Binary Size**: ~2.2 MB uncompressed per platform
 - **Archive Size**: ~1 MB compressed per platform
 - **Total Release Size**: ~6 MB (all platforms)
 - **Dependencies**: Zero external dependencies (100% Go stdlib)
