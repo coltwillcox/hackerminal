@@ -38,9 +38,6 @@ build() {
         # Move binary
         mv "${BUILD_DIR}/${OUTPUT_NAME}" "$PLATFORM_DIR/"
 
-        # Copy assets directory
-        cp -r assets "$PLATFORM_DIR/"
-
         # Copy README and LICENSE if they exist
         [ -f README.md ] && cp README.md "$PLATFORM_DIR/"
         [ -f LICENSE ] && cp LICENSE "$PLATFORM_DIR/"

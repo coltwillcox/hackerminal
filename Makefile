@@ -50,7 +50,6 @@ install: build
 	@echo "📦 Installing $(BINARY_NAME)..."
 	@sudo cp $(BINARY_NAME) /usr/local/bin/
 	@sudo mkdir -p /usr/local/share/$(BINARY_NAME)
-	@sudo cp -r assets /usr/local/share/$(BINARY_NAME)/
 	@echo "✅ Installed to /usr/local/bin/$(BINARY_NAME)"
 
 # Uninstall from system
