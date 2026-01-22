@@ -1,6 +1,6 @@
 .PHONY: all build clean test run install help
 
-VERSION ?= 1.1.1
+VERSION ?= 1.2.0
 BINARY_NAME = hackerminal
 BUILD_DIR = build
 

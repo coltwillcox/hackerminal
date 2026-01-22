@@ -132,7 +132,7 @@ func LoadStats() (*Stats, error) {
 
 	filePath := filepath.Join(configDir, "stats.json")
 	stats := &Stats{
-		Version:            "1.1.1",
+		Version:            "1.2.0",
 		SequencesTriggered: make(map[string]int),
 		EffectsTriggered:   make(map[string]int),
 		Achievements:       []UnlockedAchievement{},

@@ -37,6 +37,12 @@
   - 👽 Sci-fi franchises (Alien, Predator, Terminator)
   - 📺 Popular TV shows (CSI: Cyber, Mr. Robot)
   - 🌐 Internet culture and memes
+- 🏆 **Achievements & Statistics**: Gamified tracking system
+  - 15 unlockable achievements (Rookie, Intermediate, Advanced, Rare)
+  - Session and all-time statistics tracking
+  - Persistent storage in `~/.config/hackerminal/stats.json`
+  - Achievement notifications with visual celebration
+  - Stats dashboard on exit (Ctrl+C)
 
 ## 🎨 Visual Effects
 
@@ -57,17 +63,17 @@ Download the latest release for your platform:
 
 **Linux:**
 ```bash
-wget https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.1.1-linux-amd64.tar.gz
-tar -xzf hackerminal-1.1.1-linux-amd64.tar.gz
-cd hackerminal-1.1.1-linux-amd64
+wget https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.2.0-linux-amd64.tar.gz
+tar -xzf hackerminal-1.2.0-linux-amd64.tar.gz
+cd hackerminal-1.2.0-linux-amd64
 ./hackerminal
 ```
 
 **macOS:**
 ```bash
-curl -LO https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.1.1-darwin-arm64.tar.gz
-tar -xzf hackerminal-1.1.1-darwin-arm64.tar.gz
-cd hackerminal-1.1.1-darwin-arm64
+curl -LO https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.2.0-darwin-arm64.tar.gz
+tar -xzf hackerminal-1.2.0-darwin-arm64.tar.gz
+cd hackerminal-1.2.0-darwin-arm64
 ./hackerminal
 ```
 
@@ -216,6 +222,27 @@ The program uses default settings that can be adjusted in `config.go`:
 - 🖼️ **Split screen**: 10% chance
 - 📁 **File tree**: 10% chance
 - ⌨️ **Typos**: 5% chance
+
+## 🏆 Achievements & Statistics
+
+Hackerminal tracks your "hacking" activity with a gamified achievements system:
+
+**Statistics Tracked:**
+- 📊 **Session Stats**: Commands typed, sequences triggered, session duration
+- 📈 **All-Time Stats**: Total sessions, total commands, total uptime, longest session
+- 🔥 **Streak Tracking**: Daily session streak counter
+- 🎯 **Effect Stats**: Glitches, CRT scans, Matrix rain, ASCII splashes, and more
+
+**Achievement Tiers:**
+- 🥉 **Rookie**: "I'm In!", "Script Kiddie", "Password Hunter", "Green Screen"
+- 🥈 **Intermediate**: "Glitch Master", "Matrix Fan", "Virus Deployer", "Splash Collector"
+- 🥇 **Advanced**: "Hack the Planet!", "Pentagon Infiltrator", "Command Master", "Dedicated Hacker"
+- 💎 **Rare**: "Night Owl", "Marathon Runner", "Lucky Seven"
+
+**How to View:**
+- Press `Ctrl+C` to see your statistics and achievements
+- Achievement notifications appear automatically when unlocked
+- Stats stored in `~/.config/hackerminal/stats.json`
 
 ## 🎬 Movie References
 

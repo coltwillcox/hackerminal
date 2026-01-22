@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=${1:-"1.1.1"}
+VERSION=${1:-"1.2.0"}
 BUILD_DIR="build"
 BINARY_NAME="hackerminal"
 
