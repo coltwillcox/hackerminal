@@ -1,6 +1,6 @@
 .PHONY: all build clean test run install help
 
-VERSION ?= 1.2.1
+VERSION ?= 1.2.2
 BINARY_NAME = hackerminal
 BUILD_DIR = build
 
@@ -82,4 +82,4 @@ help:
 	@echo "  make help         - Show this help message"
 	@echo ""
 	@echo "Variables:"
-	@echo "  VERSION=$(VERSION)  - Set version for build-all (e.g., make build-all VERSION=1.2.1)"
+	@echo "  VERSION=$(VERSION)  - Set version for build-all (e.g., make build-all VERSION=1.2.2)"
