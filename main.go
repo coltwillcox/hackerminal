@@ -32,10 +32,10 @@ func main() {
 	go func() {
 		<-sigChan
 		fmt.Println("\n\n\033[33m[!] Shutting down...\033[0m")
-		terminal.Stats.PrintStats()
 		if err := terminal.Stats.Save(); err != nil {
 			fmt.Printf("Warning: Could not save stats: %v\n", err)
 		}
+		terminal.Stats.PrintStats()
 		os.Exit(0)
 	}()
 

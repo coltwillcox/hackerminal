@@ -22,6 +22,7 @@ type Stats struct {
 	CurrentStreak      int                         `json:"current_streak"`
 	LastSessionDate    string                      `json:"last_session_date"`
 	SessionStartTime   time.Time                   `json:"-"`
+	LastSaveTime       time.Time                   `json:"-"`
 	CurrentCommands    int                         `json:"-"`
 	CurrentSequences   map[string]int              `json:"-"`
 	FilePath           string                      `json:"-"`
@@ -167,9 +168,14 @@ func LoadStats() (*Stats, error) {
 // Save writes statistics to disk
 func (s *Stats) Save() error {
 	// Update session duration
+	now := time.Now()
+	delta := int64(now.Sub(s.LastSaveTime).Seconds())
+	s.TotalUptimeSeconds += delta
+	s.LastSaveTime = now
+
+	// Update longest session
 	if !s.SessionStartTime.IsZero() {
 		sessionDuration := int64(time.Since(s.SessionStartTime).Seconds())
-		s.TotalUptimeSeconds += sessionDuration
 		if sessionDuration > s.LongestSessionSecs {
 			s.LongestSessionSecs = sessionDuration
 		}
@@ -372,9 +378,10 @@ func truncate(s string, max int) string {
 func (s *Stats) StartNewSession() {
 	s.TotalSessions++
 	s.SessionStartTime = time.Now()
+	s.LastSaveTime = time.Now()
 	s.CurrentCommands = 0
 	s.CurrentSequences = make(map[string]int)
-	s.checkAchievements() // Check for session-start achievements like night_owl
+	s.checkAchievements()
 }
 
 // formatStreak formats a streak duration as a day count string
