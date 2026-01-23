@@ -109,14 +109,14 @@ func (s *Stats) getTotalSequenceCount(keyword string) int {
 	return total
 }
 
-// getConfigDir returns the application config directory
+// getConfigDir returns the application config directory (platform-specific)
 func getConfigDir() (string, error) {
-	homeDir, err := os.UserHomeDir()
+	configBase, err := os.UserConfigDir()
 	if err != nil {
 		return "", err
 	}
 
-	configDir := filepath.Join(homeDir, ".config", "hackerminal")
+	configDir := filepath.Join(configBase, "hackerminal")
 	if err := os.MkdirAll(configDir, 0755); err != nil {
 		return "", err
 	}

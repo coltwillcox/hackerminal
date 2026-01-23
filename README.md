@@ -40,7 +40,7 @@
 - 🏆 **Achievements & Statistics**: Gamified tracking system
   - 15 unlockable achievements (Rookie, Intermediate, Advanced, Rare)
   - Session and all-time statistics tracking
-  - Persistent storage in `~/.config/hackerminal/stats.json`
+  - Platform-specific persistent storage (Linux: `~/.config/hackerminal`, macOS: `~/Library/Application Support/hackerminal`, Windows: `%APPDATA%\hackerminal`)
   - Achievement notifications with visual celebration
   - Stats dashboard on exit (Ctrl+C)
 
@@ -258,7 +258,7 @@ Hackerminal tracks your "hacking" activity with a gamified achievements system:
 **How to View:**
 - Press `Ctrl+C` to see your statistics and achievements
 - Achievement notifications appear automatically when unlocked
-- Stats stored in `~/.config/hackerminal/stats.json`
+- Stats stored in platform-specific config directory
 
 ## 🎬 Movie References
 
