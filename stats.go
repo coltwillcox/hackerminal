@@ -299,7 +299,7 @@ func (s *Stats) formatCurrentStats() (result string) {
 	result += "╠════════════════════════════════════════════════════╣\n"
 	result += "║                                                    ║\n"
 	result += "║  SESSION STATS                                     ║\n"
-	result += fmt.Sprintf("║    Commands typed:     %-4d                        ║\n", s.CurrentCommands)
+	result += fmt.Sprintf("║    Commands typed:     %-7d                     ║\n", s.CurrentCommands)
 	result += fmt.Sprintf("║    Session time:       %-7s                     ║\n", formatDuration(sessionDuration))
 	if len(s.CurrentSequences) > 0 {
 		result += "║                                                    ║\n"
