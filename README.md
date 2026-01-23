@@ -6,11 +6,11 @@
 
 ### ⚡ A parody terminal application that simulates Hollywood-style "hacking" scenes ⚡
 
-```ascii
+<pre>
 ╔═══════════════════════════════════════════════════════════════╗
 ║             "I'm in!" - Every movie hacker ever               ║
 ╚═══════════════════════════════════════════════════════════════╝
-```
+</pre>
 
 [![Go](https://img.shields.io/badge/Go-1.16+-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/)
 [![Terminal](https://img.shields.io/badge/Terminal-Required-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
