@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -264,16 +265,17 @@ func (s *Stats) unlockAchievement(achievement Achievement) {
 }
 
 // formatAchievement formats an achievement notification as a string
-func (s *Stats) formatAchievement(achievement Achievement) (result string) {
-	result += "\n\033[1;33m"
-	result += "╔════════════════════════════════════════════════════╗\n"
-	result += fmt.Sprintf("║  %s ACHIEVEMENT UNLOCKED!                          ║\n", achievement.Icon)
-	result += "╠════════════════════════════════════════════════════╣\n"
-	result += fmt.Sprintf("║  %-49s ║\n", achievement.Name)
-	result += fmt.Sprintf("║  %-49s ║\n", achievement.Description)
-	result += "╚════════════════════════════════════════════════════╝"
-	result += "\033[0m\n"
-	return result
+func (s *Stats) formatAchievement(achievement Achievement) string {
+	var sb strings.Builder
+	sb.WriteString("\n\033[1;33m")
+	sb.WriteString("╔════════════════════════════════════════════════════╗\n")
+	fmt.Fprintf(&sb, "║  %s ACHIEVEMENT UNLOCKED!                          ║\n", achievement.Icon)
+	sb.WriteString("╠════════════════════════════════════════════════════╣\n")
+	fmt.Fprintf(&sb, "║  %-49s ║\n", achievement.Name)
+	fmt.Fprintf(&sb, "║  %-49s ║\n", achievement.Description)
+	sb.WriteString("╚════════════════════════════════════════════════════╝")
+	sb.WriteString("\033[0m\n")
+	return sb.String()
 }
 
 // PrintStats displays current session and all-time statistics
@@ -288,22 +290,24 @@ func (s *Stats) PrintStats() {
 }
 
 // formatCurrentStats returns current statistics formatted
-func (s *Stats) formatCurrentStats() (result string) {
+func (s *Stats) formatCurrentStats() string {
+	var sb strings.Builder
+
 	sessionDuration := int64(0)
 	if !s.SessionStartTime.IsZero() {
 		sessionDuration = int64(time.Since(s.SessionStartTime).Seconds())
 	}
 
-	result += "\n\033[1;32m╔════════════════════════════════════════════════════╗\n"
-	result += "║              HACKERMINAL STATISTICS                ║\n"
-	result += "╠════════════════════════════════════════════════════╣\n"
-	result += "║                                                    ║\n"
-	result += "║  SESSION STATS                                     ║\n"
-	result += fmt.Sprintf("║    Commands typed:     %-7d                     ║\n", s.CurrentCommands)
-	result += fmt.Sprintf("║    Session time:       %-7s                     ║\n", formatDuration(sessionDuration))
+	sb.WriteString("\n\033[1;32m╔════════════════════════════════════════════════════╗\n")
+	sb.WriteString("║              HACKERMINAL STATISTICS                ║\n")
+	sb.WriteString("╠════════════════════════════════════════════════════╣\n")
+	sb.WriteString("║                                                    ║\n")
+	sb.WriteString("║  SESSION STATS                                     ║\n")
+	fmt.Fprintf(&sb, "║    Commands typed:     %-7d                     ║\n", s.CurrentCommands)
+	fmt.Fprintf(&sb, "║    Session time:       %-7s                     ║\n", formatDuration(sessionDuration))
 	if len(s.CurrentSequences) > 0 {
-		result += "║                                                    ║\n"
-		result += "║  SEQUENCES THIS SESSION                            ║\n"
+		sb.WriteString("║                                                    ║\n")
+		sb.WriteString("║  SEQUENCES THIS SESSION                            ║\n")
 		// Show top 3 sequences
 		type seqCount struct {
 			name  string
@@ -317,22 +321,22 @@ func (s *Stats) formatCurrentStats() (result string) {
 			return sequences[i].count > sequences[j].count
 		})
 		for i := 0; i < len(sequences) && i < 3; i++ {
-			result += fmt.Sprintf("║    %-20s x%-4d                      ║\n", truncate(sequences[i].name, 20), sequences[i].count)
+			fmt.Fprintf(&sb, "║    %-20s x%-4d                      ║\n", truncate(sequences[i].name, 20), sequences[i].count)
 		}
 	}
-	result += "║                                                    ║\n"
-	result += "║  ALL-TIME STATS                                    ║\n"
-	result += fmt.Sprintf("║    Total sessions:     %-7d                     ║\n", s.TotalSessions)
-	result += fmt.Sprintf("║    Total commands:     %-7d                     ║\n", s.TotalCommands)
-	result += fmt.Sprintf("║    Total time:         %-7s                     ║\n", formatDuration(s.TotalUptimeSeconds))
-	result += fmt.Sprintf("║    Longest session:    %-7s                     ║\n", formatDuration(s.LongestSessionSecs))
-	result += fmt.Sprintf("║    Current streak:     %-7s                     ║\n", formatStreak(s.CurrentStreak))
-	result += fmt.Sprintf("║    Achievements:       %-7s                     ║\n", formatAchievements(s.Achievements))
-	result += "║                                                    ║\n"
+	sb.WriteString("║                                                    ║\n")
+	sb.WriteString("║  ALL-TIME STATS                                    ║\n")
+	fmt.Fprintf(&sb, "║    Total sessions:     %-7d                     ║\n", s.TotalSessions)
+	fmt.Fprintf(&sb, "║    Total commands:     %-7d                     ║\n", s.TotalCommands)
+	fmt.Fprintf(&sb, "║    Total time:         %-7s                     ║\n", formatDuration(s.TotalUptimeSeconds))
+	fmt.Fprintf(&sb, "║    Longest session:    %-7s                     ║\n", formatDuration(s.LongestSessionSecs))
+	fmt.Fprintf(&sb, "║    Current streak:     %-7s                     ║\n", formatStreak(s.CurrentStreak))
+	fmt.Fprintf(&sb, "║    Achievements:       %-7s                     ║\n", formatAchievements(s.Achievements))
+	sb.WriteString("║                                                    ║\n")
 
 	// Show recent achievements
 	if len(s.Achievements) > 0 {
-		result += "║  RECENT ACHIEVEMENTS                               ║\n"
+		sb.WriteString("║  RECENT ACHIEVEMENTS                               ║\n")
 		start := 0
 		if len(s.Achievements) > 3 {
 			start = len(s.Achievements) - 3
@@ -340,17 +344,17 @@ func (s *Stats) formatCurrentStats() (result string) {
 		for i := start; i < len(s.Achievements); i++ {
 			for _, achievement := range achievements {
 				if achievement.ID == s.Achievements[i].ID {
-					result += fmt.Sprintf("║    %s %-44s ║\n", achievement.Icon, truncate(achievement.Name, 42))
+					fmt.Fprintf(&sb, "║    %s %-44s ║\n", achievement.Icon, truncate(achievement.Name, 42))
 					break
 				}
 			}
 		}
-		result += "║                                                    ║\n"
+		sb.WriteString("║                                                    ║\n")
 	}
 
-	result += "╚════════════════════════════════════════════════════╝\n\n\033[0m"
+	sb.WriteString("╚════════════════════════════════════════════════════╝\n\n\033[0m")
 
-	return
+	return sb.String()
 }
 
 // formatDuration formats seconds into a readable duration
