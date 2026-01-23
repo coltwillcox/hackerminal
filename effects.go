@@ -287,6 +287,10 @@ func (h *HackerTerminal) asciiSplash() {
 			art:   amiga,
 			color: "\033[33m", // Yellow
 		},
+		{
+			art:   keygen,
+			color: "\033[96m", // Bright cyan
+		},
 	}
 
 	// Select random artwork
