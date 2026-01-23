@@ -155,7 +155,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Additional visual effects (3D ASCII, hex dumps, etc.)
 - Configuration file support
 - Command-line flags for customization
-- Achievements/statistics system
 
 ---
 
