@@ -155,6 +155,8 @@ func LoadStats() (*Stats, error) {
 		return nil, err
 	}
 
+	// Update version to current version
+	stats.Version = "1.2.0"
 	stats.SessionStartTime = time.Now()
 	stats.CurrentSequences = make(map[string]int)
 	stats.FilePath = filePath
@@ -318,8 +320,8 @@ func (s *Stats) formatCurrentStats() (result string) {
 	result += fmt.Sprintf("║    Total commands:     %-7d                     ║\n", s.TotalCommands)
 	result += fmt.Sprintf("║    Total time:         %-7s                     ║\n", formatDuration(s.TotalUptimeSeconds))
 	result += fmt.Sprintf("║    Longest session:    %-7s                     ║\n", formatDuration(s.LongestSessionSecs))
-	result += fmt.Sprintf("║    Current streak:     %-7d days                ║\n", s.CurrentStreak)
-	result += fmt.Sprintf("║    Achievements:       %-2d/%-2d                       ║\n", len(s.Achievements), len(achievements))
+	result += fmt.Sprintf("║    Current streak:     %-7s                     ║\n", formatStreak(s.CurrentStreak))
+	result += fmt.Sprintf("║    Achievements:       %-7s                     ║\n", formatAchievements(s.Achievements))
 	result += "║                                                    ║\n"
 
 	// Show recent achievements
@@ -373,4 +375,19 @@ func (s *Stats) StartNewSession() {
 	s.CurrentCommands = 0
 	s.CurrentSequences = make(map[string]int)
 	s.checkAchievements() // Check for session-start achievements like night_owl
+}
+
+// formatStreak formats a streak duration as a day count string
+func formatStreak(duration int) (result string) {
+	suffix := ""
+	if duration > 1 {
+		suffix = "s"
+	}
+	result = fmt.Sprintf("%d day%s", duration, suffix)
+	return
+}
+
+// formatAchievements formats achievement progress as unlocked/total count
+func formatAchievements(unlockedAchievements []UnlockedAchievement) string {
+	return fmt.Sprintf("%d / %d", len(unlockedAchievements), len(achievements))
 }

@@ -70,8 +70,8 @@ func (h *HackerTerminal) FakeIPScan() {
 // MatrixRain displays a Matrix-style character rain effect
 func (h *HackerTerminal) MatrixRain() {
 	// Track effect
-	if h.stats != nil {
-		h.stats.TrackEffect("matrix_rain")
+	if h.Stats != nil {
+		h.Stats.TrackEffect("matrix_rain")
 	}
 
 	chars := "01アイウエオカキクケコサシスセソタチツテト"
@@ -528,38 +528,38 @@ func (h *HackerTerminal) RandomEffect() {
 	effectRoll := rand.Float32()
 	if effectRoll < chanceGlitch {
 		time.Sleep(200 * time.Millisecond)
-		if h.stats != nil {
-			h.stats.TrackEffect("glitch")
+		if h.Stats != nil {
+			h.Stats.TrackEffect("glitch")
 		}
 		h.screenGlitch()
 	} else if effectRoll < chanceGlitch+chanceCrtScan {
 		time.Sleep(200 * time.Millisecond)
-		if h.stats != nil {
-			h.stats.TrackEffect("crt_scan")
+		if h.Stats != nil {
+			h.Stats.TrackEffect("crt_scan")
 		}
 		h.crtScanLines()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash {
 		time.Sleep(200 * time.Millisecond)
-		if h.stats != nil {
-			h.stats.TrackEffect("splash")
+		if h.Stats != nil {
+			h.Stats.TrackEffect("splash")
 		}
 		h.asciiSplash()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology {
 		time.Sleep(200 * time.Millisecond)
-		if h.stats != nil {
-			h.stats.TrackEffect("topology")
+		if h.Stats != nil {
+			h.Stats.TrackEffect("topology")
 		}
 		h.networkTopology()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology+chanceSplitScreen {
 		time.Sleep(200 * time.Millisecond)
-		if h.stats != nil {
-			h.stats.TrackEffect("split_screen")
+		if h.Stats != nil {
+			h.Stats.TrackEffect("split_screen")
 		}
 		h.splitScreen()
 	} else if effectRoll < chanceGlitch+chanceCrtScan+chanceAsciiSplash+chanceTopology+chanceSplitScreen+chanceFileTree {
 		time.Sleep(200 * time.Millisecond)
-		if h.stats != nil {
-			h.stats.TrackEffect("file_tree")
+		if h.Stats != nil {
+			h.Stats.TrackEffect("file_tree")
 		}
 		h.fileTree()
 	}

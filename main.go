@@ -19,12 +19,12 @@ func main() {
 	}
 
 	// Start new session
-	terminal.stats = stats
+	terminal.Stats = stats
 
 	// Set up notification callback
-	terminal.stats.OnNotification = terminal.PrintNotification
+	terminal.Stats.OnNotification = terminal.PrintNotification
 
-	terminal.stats.StartNewSession()
+	terminal.Stats.StartNewSession()
 
 	// Set up signal handling for graceful shutdown
 	sigChan := make(chan os.Signal, 1)
@@ -32,8 +32,8 @@ func main() {
 	go func() {
 		<-sigChan
 		fmt.Println("\n\n\033[33m[!] Shutting down...\033[0m")
-		terminal.stats.PrintStats()
-		if err := terminal.stats.Save(); err != nil {
+		terminal.Stats.PrintStats()
+		if err := terminal.Stats.Save(); err != nil {
 			fmt.Printf("Warning: Could not save stats: %v\n", err)
 		}
 		os.Exit(0)

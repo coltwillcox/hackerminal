@@ -16,9 +16,9 @@ type Sequence struct {
 
 // CreateSequences initializes all available hacking sequence definitions
 func (h *HackerTerminal) CreateSequences() {
-	h.sequences = []Sequence{
+	h.Sequences = []Sequence{
 		{name: "ssh_root", fn: func() {
-			h.TypeCommand("ssh root@"+h.target, 50)
+			h.TypeCommand("ssh root@"+h.Target, 50)
 			time.Sleep(300 * time.Millisecond)
 			h.TypeText("\033[33mWarning: Unauthorized access detected!\033[0m", 30)
 			time.Sleep(500 * time.Millisecond)
@@ -34,7 +34,7 @@ func (h *HackerTerminal) CreateSequences() {
 			h.TypeText("\033[33m"+spacer+"(Just kidding, please don't hack planets)\033[0m", 30)
 		}},
 		{name: "nmap_scan", fn: func() {
-			h.TypeCommand("nmap -sS -p- --reason "+h.target, 50)
+			h.TypeCommand("nmap -sS -p- --reason "+h.Target, 50)
 			h.FakeIPScan()
 		}},
 		{name: "crack_password", fn: func() {
@@ -393,7 +393,7 @@ func (h *HackerTerminal) CreateSequences() {
 			h.TypeText("\033[33m"+spacer+"(They'd need to raid 4 countries simultaneously)\033[0m", 30)
 		}},
 		{name: "sql_inject", fn: func() {
-			h.TypeCommand("sql_inject --url="+h.target+"/login --payload='OR 1=1--", 50)
+			h.TypeCommand("sql_inject --url="+h.Target+"/login --payload='OR 1=1--", 50)
 			time.Sleep(500 * time.Millisecond)
 			h.TypeText("\033[36m[*] Testing for SQL injection vulnerabilities...\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
@@ -448,7 +448,7 @@ func (h *HackerTerminal) CreateSequences() {
 			h.TypeText("\033[33m"+spacer+"(Satoshi wins this round)\033[0m", 30)
 		}},
 		{name: "social_engineer", fn: func() {
-			h.TypeCommand("social_engineer --target=ceo@"+h.target+" --pretend=IT-support", 50)
+			h.TypeCommand("social_engineer --target=ceo@"+h.Target+" --pretend=IT-support", 50)
 			time.Sleep(500 * time.Millisecond)
 			h.TypeText("\033[36m[*] Crafting convincing phishing email...\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
@@ -462,7 +462,7 @@ func (h *HackerTerminal) CreateSequences() {
 			h.TypeText("\033[33m"+spacer+"(The human is always the weakest link)\033[0m", 30)
 		}},
 		{name: "zero_day_exploit", fn: func() {
-			h.TypeCommand("zero_day_exploit --vulnerability=CVE-2077-1337 --target="+h.target, 50)
+			h.TypeCommand("zero_day_exploit --vulnerability=CVE-2077-1337 --target="+h.Target, 50)
 			time.Sleep(500 * time.Millisecond)
 			h.TypeText("\033[36m[*] Loading zero-day exploit from dark web...\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
@@ -474,7 +474,7 @@ func (h *HackerTerminal) CreateSequences() {
 			h.TypeText("\033[33m"+spacer+"(Worth every satoshi)\033[0m", 30)
 		}},
 		{name: "botnet_ddos", fn: func() {
-			h.TypeCommand("botnet_control --zombies=10000 --ddos-target="+h.target+" --intensity=maximum", 50)
+			h.TypeCommand("botnet_control --zombies=10000 --ddos-target="+h.Target+" --intensity=maximum", 50)
 			time.Sleep(500 * time.Millisecond)
 			h.TypeText("\033[36m[*] Commanding botnet to attack target...\033[0m", 30)
 			time.Sleep(300 * time.Millisecond)
@@ -624,7 +624,7 @@ func (h *HackerTerminal) CreateSequences() {
 			h.TypeText("\033[33m"+spacer+"(Your browser knows all your secrets)\033[0m", 30)
 		}},
 		{name: "dns_poisoning", fn: func() {
-			h.TypeCommand("dns_poisoning --target-domain="+h.target+" --redirect=evil-server.onion", 50)
+			h.TypeCommand("dns_poisoning --target-domain="+h.Target+" --redirect=evil-server.onion", 50)
 			time.Sleep(500 * time.Millisecond)
 			h.TypeText("\033[36m[*] Intercepting DNS queries...\033[0m", 30)
 			time.Sleep(400 * time.Millisecond)
@@ -733,16 +733,13 @@ func (h *HackerTerminal) RunSequence() {
 	h.ShowPrompt()
 	h.RandomPause()
 
-	// Run a random sequence
-	sequence := h.sequences[rand.Intn(len(h.sequences))]
-	sequence.fn()
-
-	// Track sequence
-	if h.stats != nil {
-		h.stats.TrackSequence(sequence.name)
-	}
-
+	h.RandomizeSequence()
+	h.RunCurrentSequence()
+	h.TrackSequence()
 	h.RandomEffect()
+
+	// Save stats after each sequence (in case terminal is closed abruptly)
+	h.SaveStats()
 
 	printSeparator()
 	time.Sleep(1500 * time.Millisecond)

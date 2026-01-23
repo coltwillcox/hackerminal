@@ -32,17 +32,18 @@ var (
 
 // HackerTerminal manages the terminal display and sequence execution
 type HackerTerminal struct {
-	username  string
-	target    string
-	sequences []Sequence
-	stats     *Stats
+	Username        string
+	Target          string
+	Sequences       []Sequence
+	CurrentSequence Sequence
+	Stats           *Stats
 }
 
 // NewHackerTerminal creates a new terminal with random username and target
 func NewHackerTerminal() *HackerTerminal {
 	hackerTerminal := &HackerTerminal{
-		username: usernames[rand.Intn(len(usernames))],
-		target:   targets[rand.Intn(len(targets))],
+		Username: usernames[rand.Intn(len(usernames))],
+		Target:   targets[rand.Intn(len(targets))],
 	}
 	hackerTerminal.CreateSequences()
 
@@ -171,8 +172,8 @@ func (h *HackerTerminal) TypeCommand(text string, delayMs int) {
 	printSeparator()
 
 	// Track command
-	if h.stats != nil {
-		h.stats.TrackCommand()
+	if h.Stats != nil {
+		h.Stats.TrackCommand()
 	}
 }
 
@@ -191,7 +192,7 @@ func (h *HackerTerminal) ShowPrompt() {
 
 	// User segment - Bright phosphor green
 	leftPrompt += "\033[48;5;22m\033[38;5;46m"
-	leftPrompt += " 󰀄 " + h.username
+	leftPrompt += " 󰀄 " + h.Username
 	leftPrompt += " \033[0m\033[38;5;22m\033[0m"
 
 	// Host segment - Medium green
@@ -290,7 +291,7 @@ func (h *HackerTerminal) showDashboard() {
 	}
 
 	// Bottom stats bar
-	bottomStats := fmt.Sprintf("PROTO: \033[36mTCP/IP\033[0m | CONN: \033[36m%d\033[0m | PKT/s: \033[36m%d\033[0m | TARGET: \033[36m%s\033[0m", connActive, pktsPerSec, h.target)
+	bottomStats := fmt.Sprintf("PROTO: \033[36mTCP/IP\033[0m | CONN: \033[36m%d\033[0m | PKT/s: \033[36m%d\033[0m | TARGET: \033[36m%s\033[0m", connActive, pktsPerSec, h.Target)
 
 	// Display top stats (left and right aligned)
 	for i := range leftStats {
@@ -346,4 +347,30 @@ func (h *HackerTerminal) DrawCentered(image, color string, hold int64, clear boo
 // PrintNotification displays a notification message using centered formatting
 func (h *HackerTerminal) PrintNotification(notification, color string, hold int64) {
 	h.DrawCentered(notification, color, hold, false)
+}
+
+// RandomizeSequence selects a random sequence and sets it as the current sequence
+func (h *HackerTerminal) RandomizeSequence() {
+	h.CurrentSequence = h.Sequences[rand.Intn(len(h.Sequences))]
+}
+
+// RunCurrentSequence executes the currently selected sequence
+func (h *HackerTerminal) RunCurrentSequence() {
+	if h.CurrentSequence.fn != nil {
+		h.CurrentSequence.fn()
+	}
+}
+
+// TrackSequence records the current sequence in statistics
+func (h *HackerTerminal) TrackSequence() {
+	if h.Stats != nil && h.CurrentSequence.name != "" {
+		h.Stats.TrackSequence(h.CurrentSequence.name)
+	}
+}
+
+// SaveStats persists statistics to disk
+func (h *HackerTerminal) SaveStats() {
+	if h.Stats != nil {
+		h.Stats.Save()
+	}
 }
