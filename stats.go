@@ -45,21 +45,21 @@ type Achievement struct {
 
 var achievements = []Achievement{
 	// Rookie
-	{ID: "im_in", Name: "I'm In!", Description: "Complete your first hacking sequence", Icon: "🎯",
+	{ID: "im_in", Name: "I'm In!", Description: "Complete your first hacking sequence", Icon: "🔓",
 		Check: func(s *Stats) bool { return s.TotalCommands >= 1 }},
 	{ID: "script_kiddie", Name: "Script Kiddie", Description: "Type 100 commands", Icon: "⌨️",
 		Check: func(s *Stats) bool { return s.TotalCommands >= 100 }},
-	{ID: "password_hunter", Name: "Password Hunter", Description: "Crack 10 passwords", Icon: "🔐",
+	{ID: "password_hunter", Name: "Password Hunter", Description: "Crack 10 passwords", Icon: "🔑",
 		Check: func(s *Stats) bool { return s.getTotalSequenceCount("password") >= 10 }},
 	{ID: "green_screen", Name: "Green Screen", Description: "Trigger 5 CRT effects", Icon: "💚",
 		Check: func(s *Stats) bool { return s.EffectsTriggered["crt_scan"] >= 5 }},
 
 	// Intermediate
-	{ID: "glitch_master", Name: "Glitch Master", Description: "Experience 50 screen glitches", Icon: "👾",
+	{ID: "glitch_master", Name: "Glitch Master", Description: "Experience 50 screen glitches", Icon: "🤖",
 		Check: func(s *Stats) bool { return s.EffectsTriggered["glitch"] >= 50 }},
 	{ID: "matrix_fan", Name: "Matrix Fan", Description: "See Matrix rain 25 times", Icon: "🌧️",
 		Check: func(s *Stats) bool { return s.EffectsTriggered["matrix_rain"] >= 25 }},
-	{ID: "virus_deployer", Name: "Virus Deployer", Description: "Deploy 50 fake viruses", Icon: "🦠",
+	{ID: "virus_deployer", Name: "Virus Deployer", Description: "Deploy 50 fake viruses", Icon: "☠️",
 		Check: func(s *Stats) bool { return s.getTotalSequenceCount("virus") >= 50 }},
 	{ID: "splash_collector", Name: "Splash Collector", Description: "See 20 ASCII splash screens", Icon: "💀",
 		Check: func(s *Stats) bool { return s.EffectsTriggered["splash"] >= 20 }},
@@ -67,7 +67,7 @@ var achievements = []Achievement{
 	// Advanced
 	{ID: "hack_planet", Name: "Hack the Planet!", Description: "Run for 1 hour total", Icon: "🏆",
 		Check: func(s *Stats) bool { return s.TotalUptimeSeconds >= 3600 }},
-	{ID: "pentagon_infiltrator", Name: "Pentagon Infiltrator", Description: "Hack pentagon 50 times", Icon: "🎯",
+	{ID: "pentagon_infiltrator", Name: "Pentagon Infiltrator", Description: "Hack pentagon 50 times", Icon: "🏛️",
 		Check: func(s *Stats) bool { return s.SequencesTriggered["pentagon"] >= 50 }},
 	{ID: "command_master", Name: "Command Master", Description: "Type 1000 commands", Icon: "⚡",
 		Check: func(s *Stats) bool { return s.TotalCommands >= 1000 }},
