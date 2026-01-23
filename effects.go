@@ -291,11 +291,15 @@ func (h *HackerTerminal) asciiSplash() {
 			art:   keygen,
 			color: "\033[96m", // Bright cyan
 		},
+		{
+			art:   doom,
+			color: "\033[31m", // Red
+		},
 	}
 
 	// Select random artwork
 	selected := artworks[rand.Intn(len(artworks))]
-	h.DrawCentered(selected.art, selected.color, 1500, true)
+	h.DrawCentered(selected.art, selected.color, 1500, false)
 }
 
 func (h *HackerTerminal) networkTopology() {
