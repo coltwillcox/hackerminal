@@ -63,17 +63,17 @@ Download the latest release for your platform:
 
 **Linux:**
 ```bash
-wget https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.2.0-linux-amd64.tar.gz
-tar -xzf hackerminal-1.2.0-linux-amd64.tar.gz
-cd hackerminal-1.2.0-linux-amd64
+wget https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.2.1-linux-amd64.tar.gz
+tar -xzf hackerminal-1.2.1-linux-amd64.tar.gz
+cd hackerminal-1.2.1-linux-amd64
 ./hackerminal
 ```
 
 **macOS:**
 ```bash
-curl -LO https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.2.0-darwin-arm64.tar.gz
-tar -xzf hackerminal-1.2.0-darwin-arm64.tar.gz
-cd hackerminal-1.2.0-darwin-arm64
+curl -LO https://github.com/coltwillcox/hackerminal/releases/latest/download/hackerminal-1.2.1-darwin-arm64.tar.gz
+tar -xzf hackerminal-1.2.1-darwin-arm64.tar.gz
+cd hackerminal-1.2.1-darwin-arm64
 ./hackerminal
 ```
 
