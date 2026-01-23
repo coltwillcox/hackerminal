@@ -279,6 +279,14 @@ func (h *HackerTerminal) asciiSplash() {
 			art:   matrix,
 			color: "\033[32m", // Green
 		},
+		{
+			art:   vhs,
+			color: "\033[35m", // Magenta
+		},
+		{
+			art:   amiga,
+			color: "\033[33m", // Yellow
+		},
 	}
 
 	// Select random artwork
