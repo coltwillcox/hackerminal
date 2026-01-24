@@ -134,7 +134,7 @@ func LoadStats() (*Stats, error) {
 
 	filePath := filepath.Join(configDir, "stats.json")
 	stats := &Stats{
-		Version:            "1.2.3",
+		Version:            "1.2.4",
 		SequencesTriggered: make(map[string]int),
 		EffectsTriggered:   make(map[string]int),
 		Achievements:       []UnlockedAchievement{},
@@ -158,7 +158,7 @@ func LoadStats() (*Stats, error) {
 	}
 
 	// Update version to current version
-	stats.Version = "1.2.3"
+	stats.Version = "1.2.4"
 	stats.SessionStartTime = time.Now()
 	stats.CurrentSequences = make(map[string]int)
 	stats.FilePath = filePath
